@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "updatedAt": "2026-10-24T09:02:45.561Z",
-  "lastAttemptAt": "2026-10-24T09:02:45.561Z",
-  "status": "ok",
-  "error": null,
+  "lastAttemptAt": "2026-10-24T09:04:38.138Z",
+  "status": "stale",
+  "error": "Project API returned HTTP 403",
   "items": [
     {
       "repo": "https://github.com/hilt21/ai-native-lexicon",
