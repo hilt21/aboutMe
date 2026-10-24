@@ -1,0 +1,23 @@
+import {reducedMotion} from './MotionPreference';
+import {advancePosition,createScrollMotion} from './TrainAnimator';
+// A small faceted SVG keeps the divider alive on devices without WebGL.
+export function mountFallback(host:HTMLElement){
+ const target=host.querySelector<HTMLElement>('.train-canvas')!;const ns='http://www.w3.org/2000/svg';
+ const svg=document.createElementNS(ns,'svg');svg.setAttribute('width','100%');svg.setAttribute('height','92');svg.style.display='block';svg.innerHTML=`<g data-root><g data-body>
+ <path d="M-74 14h51v7h-51z" fill="#343b3d"/><path d="M-71 21h45v21h-45z" fill="#81959d"/><path d="M-71 42l7 5h45l-7-5z" fill="#a4b3b5"/><path d="M-26 21l7 5v21l-7-5z" fill="#627b87"/><path d="M-73 43h49v4h-49z" fill="#343b3d"/>
+ <path d="M-63 28h10v10h-10zm16 0h10v10h-10z" fill="#d5e4e0"/>
+ <path d="M-11 12h81v7h-81z" fill="#343b3d"/><path d="M-3 18h25v30H-3z" fill="#bd5b3e"/><path d="M-3 48l7 5h25l-7-5z" fill="#e28e65"/><path d="M22 18l7 5v30l-7-5z" fill="#95482f"/>
+ <path d="M-7 48h33v4H-7z" fill="#343b3d"/><path d="M3 31h12v12H3z" fill="#d5e4e0"/>
+ <path d="M23 22l5-6h29l9 7v15l-9 8H28l-5-6z" fill="#c46442"/><path d="M28 40h31l7-6v4l-9 8H28z" fill="#de8a5b"/><path d="M59 18l7 5v15l-7 6z" fill="#393f3e"/><path d="M47 42h9v15h-9z" fill="#404745"/><path d="M44 55h15v5H44z" fill="#343b3d"/><path d="M30 43h8v5h-8z" fill="#c6ac7a"/><path d="M66 12h12l-4 9h-8z" fill="#bd5b3e"/>
+ </g><path d="M-24 13H-8" stroke="#aa9873" stroke-width="3"/>
+ ${[-62,-35,3,25,50].map((x,i)=>`<g data-wheel transform="translate(${x} ${i<2?8:9})"><circle r="${i<2?8:9}" fill="#343637"/><circle r="${i<2?5.2:6}" fill="#525752"/><g data-spin><path d="M-5 0H5M0-5V5" stroke="#b7a079" stroke-width="1.2"/></g><circle r="2" fill="#c6ac7a"/></g>`).join('')}
+ <path data-rod d="M3 9H50" stroke="#c6ac7a" stroke-width="2"/>
+ ${[0,1,2,3].map(i=>`<circle data-smoke="${i}" r="3" fill="#929b8b"/>`).join('')}</g>`;target.append(svg);
+ const root=svg.querySelector<SVGGElement>('[data-root]')!,body=svg.querySelector<SVGGElement>('[data-body]')!;const wheels=[...svg.querySelectorAll<SVGGElement>('[data-spin]')],smoke=[...svg.querySelectorAll<SVGCircleElement>('[data-smoke]')];
+ let width=host.clientWidth,scale=.82,x=width*.29,frame=0,last=0,time=0,distance=0,visible=false,disposed=false;const motion=createScrollMotion();const media=matchMedia('(prefers-reduced-motion: reduce)');
+ function render(dt:number){const movement=motion.step(dt,width,90*scale);if(!reducedMotion(media)){time+=dt;distance+=movement.speed*dt;x=advancePosition(x,dt,width,90*scale,movement.speed);}host.dataset.trainSpeed=movement.speed.toFixed(2);host.dataset.trainMultiplier=movement.multiplier.toFixed(3);host.dataset.trainMin=movement.min.toFixed(3);host.dataset.trainMax=movement.max.toFixed(3);root.setAttribute('transform',`translate(${x} 80) scale(${scale} ${-scale})`);body.setAttribute('transform',`translate(0 ${reducedMotion(media)?0:Math.sin(time*16)*.22})`);wheels.forEach((w,i)=>w.setAttribute('transform',`rotate(${-distance/(scale*(i<2?8:9))*180/Math.PI})`));smoke.forEach((s,i)=>{const p=(time*.5+i/4)%1;s.setAttribute('cx',String(51-p*31));s.setAttribute('cy',String(62+p*23));s.setAttribute('r',String(1+p*4));s.setAttribute('opacity',reducedMotion(media)||width<500?'0':String((1-p)*.2));});host.dataset.trainX=x.toFixed(2);host.dataset.trainTime=time.toFixed(2);}
+ function tick(now:number){if(disposed)return;const dt=last?Math.min((now-last)/1000,.1):0;last=now;render(dt);frame=requestAnimationFrame(tick);}
+ function update(){cancelAnimationFrame(frame);last=0;const active=visible&&!document.hidden&&!reducedMotion(media)&&!disposed;host.dataset.train=disposed?'disposed':active?'running':reducedMotion(media)?'reduced':'paused';host.dataset.renderer='svg-fallback';if(active)frame=requestAnimationFrame(tick);else if(!disposed)render(0);}
+ const io=new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;update()});io.observe(host);const ro=new ResizeObserver(()=>{width=host.clientWidth;scale=width<600?.66:.82;svg.setAttribute('viewBox',`0 0 ${width} 92`);x=Math.min(x,width+80);render(0)});ro.observe(host);media.addEventListener('change',update);document.addEventListener('visibilitychange',update);
+ function dispose(){disposed=true;motion.dispose();cancelAnimationFrame(frame);io.disconnect();ro.disconnect();media.removeEventListener('change',update);document.removeEventListener('visibilitychange',update);svg.remove();host.dataset.train='disposed';window.removeEventListener('pagehide',dispose);document.removeEventListener('astro:before-swap',dispose)}window.addEventListener('pagehide',dispose);document.addEventListener('astro:before-swap',dispose);update();return dispose;
+}

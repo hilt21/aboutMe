@@ -1,0 +1,1 @@
+export function reducedMotion(media:MediaQueryList){return media.matches || ((import.meta.env.DEV || import.meta.env.PUBLIC_QA==='1') && new URLSearchParams(location.search).get('qa-motion')==='reduce');}

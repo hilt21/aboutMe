@@ -1,0 +1,24 @@
+{
+  "name": "about-me",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "",
+    "build": "astro build",
+    "check": "astro check && node scripts/validate-data.mjs",
+    "sync": "node scripts/sync-github.mjs",
+    "test": "node --test scripts/*.test.mjs",
+    "dev:astro": "astro dev --host 0.0.0.0 --port 4173",
+    "refresh": "node scripts/sync-github.mjs && node scripts/sync-projects.mjs"
+  },
+  "dependencies": {
+    "astro": "^5.13.0",
+    "three": "^0.180.0",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@types/three": "^0.180.0",
+    "typescript": "^5.9.0"
+  }
+}

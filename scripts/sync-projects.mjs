@@ -1,0 +1,8 @@
+import {readFile,writeFile,rename} from 'node:fs/promises';
+import {failedSnapshot} from './github-core.mjs';
+const path=new URL('../src/data/projects.json',import.meta.url),profile=JSON.parse(await readFile(new URL('../src/data/profile.json',import.meta.url),'utf8'));
+const now=new Date().toISOString();let previous={schemaVersion:1,updatedAt:null,lastAttemptAt:now,status:'unavailable',error:null,items:[]};try{previous=JSON.parse(await readFile(path,'utf8'));}catch{}
+let result;
+try{const items=[];for(const p of profile.projects){const match=p.repo.match(/^https:\/\/github\.com\/(hilt21\/[\w.-]+)$/);if(!match)throw Error('Selected project must be an hilt21 public GitHub repository');const r=await fetch(`https://api.github.com/repos/${match[1]}`,{headers:{'User-Agent':'hilt21-aboutMe',Accept:'application/vnd.github+json'},signal:AbortSignal.timeout(30000)});if(!r.ok)throw Error(`Project API returned HTTP ${r.status}`);const repo=await r.json();if(repo.private||!Number.isInteger(repo.stargazers_count)||!repo.pushed_at)throw Error('Project metadata unavailable');items.push({repo:p.repo,stars:repo.stargazers_count,forks:repo.forks_count,pushedAt:repo.pushed_at,archived:repo.archived,defaultBranch:repo.default_branch});}result={schemaVersion:1,updatedAt:now,lastAttemptAt:now,status:'ok',error:null,items};}
+catch(e){result=failedSnapshot(previous,e.message,now);console.error('Project refresh failed; retained last valid snapshot.');process.exitCode=1;}
+await writeFile(new URL('projects.json.tmp',path),JSON.stringify(result,null,2)+'\n');await rename(new URL('projects.json.tmp',path),path);console.log(JSON.stringify({status:result.status,projects:result.items.length,updatedAt:result.updatedAt}));

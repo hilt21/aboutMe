@@ -1,0 +1,8 @@
+<div class="train-divider" aria-hidden="true" data-train-divider>
+  <div class="train-canvas"></div>
+</div>
+<script>
+
+  const el=document.querySelector<HTMLElement>('[data-train-divider]');
+  if(el){const observer=new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting)){observer.disconnect();import('../lib/train/TrainScene').then(({mountTrain})=>mountTrain(el));}}, {rootMargin:'120px'});observer.observe(el);}
+</script>

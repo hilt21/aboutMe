@@ -1,0 +1,95 @@
+{
+  "handle": "hilt21",
+  "location": "Suzhou, China",
+  "github": "https://github.com/hilt21",
+  "reviewedAt": "2026-10-12",
+  "projects": [
+    {
+      "id": "ai-native-lexicon",
+      "name": "AI Native Lexicon",
+      "category": "KNOWLEDGE SYSTEMS",
+      "description": "A shared vocabulary for building AI systems. Structured concepts, design primitives, and a navigable skill map.",
+      "zh": "为 AI 系统设计建立可探索的术语、设计原语和 Skill Map。",
+      "status": "Published",
+      "url": "https://hilt21.github.io/ai-native-lexicon/",
+      "repo": "https://github.com/hilt21/ai-native-lexicon",
+      "stack": [
+        "Astro",
+        "Structured data",
+        "GitHub Actions"
+      ],
+      "kind": "lexicon"
+    },
+    {
+      "id": "NovaCreo",
+      "name": "NovaCreo",
+      "category": "ENGINEERING AUTOMATION",
+      "description": "Bringing deterministic commands, validation gates, and replayable execution to CAD workflows.",
+      "zh": "将确定性命令、预检查和可回放执行引入 CAD 工作流。真实 Creo 适配层仍待实现。",
+      "status": "Prototype",
+      "url": "https://github.com/hilt21/NovaCreo",
+      "repo": "https://github.com/hilt21/NovaCreo",
+      "stack": [
+        "C++",
+        "CMake",
+        "CAD"
+      ],
+      "kind": "cad"
+    },
+    {
+      "id": "AI-MLS",
+      "name": "AI-MLS",
+      "category": "APPLIED AI",
+      "description": "An image-to-review learning loop: capture a mistake, understand it, and revisit it with intention.",
+      "zh": "从错题图片到复习闭环：记录、理解，再有计划地复盘。",
+      "status": "Live MVP",
+      "url": "https://mls.embrake.dev/",
+      "repo": "https://github.com/hilt21/AI-MLS",
+      "stack": [
+        "AI workflows",
+        "Cloudflare",
+        "Learning systems"
+      ],
+      "kind": "learning"
+    },
+    {
+      "id": "Procedural-Effects-Lab",
+      "name": "Effects Lab",
+      "category": "CREATIVE COMPUTING",
+      "description": "Small experiments in motion, light, and the expressive side of the web. A place to learn by making.",
+      "zh": "探索运动、光线和网页表达力的小实验。在动手构建中学习。",
+      "status": "Experiment",
+      "url": "https://hilt21.github.io/Procedural-Effects-Lab/",
+      "repo": "https://github.com/hilt21/Procedural-Effects-Lab",
+      "stack": [
+        "Procedural motion",
+        "Web graphics"
+      ],
+      "kind": "effects"
+    }
+  ],
+  "experienceBaselineYear": 2026,
+  "experiences": [
+    {
+      "id": "mechanical",
+      "years": 16,
+      "en": "Mechanical engineering",
+      "zh": "机械工程经验"
+    },
+    {
+      "id": "braking",
+      "years": 9,
+      "en": "Railway braking systems",
+      "zh": "铁路制动系统经验"
+    },
+    {
+      "id": "vibe",
+      "years": 3,
+      "en": "AI-assisted development",
+      "zh": "AI 辅助开发"
+    }
+  ],
+  "name": "Lu Tao",
+  "linkedin": "https://www.linkedin.com/in/taolu42",
+  "email": "490182461@qq.com"
+}
