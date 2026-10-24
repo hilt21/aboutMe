@@ -12,4 +12,4 @@ The user authorizes the ChatGPT task to refresh public contributions and enginee
 6. If no editorial changes, append one concise entry to docs/maintenance-log.md to trigger fresh collection/build. This is an operational record, not an attempt to create artificial contribution activity.
 7. On failure, preserve snapshots and report the actual blocker. Do not claim an update without deployment success. If Pages is disabled, report that setting. Do not silently change hosts.
 
-Active recurring scheduler: GitHub Actions, Mondays at 08:17 Asia/Shanghai (00:17 UTC). It refreshes contributions and metadata for the current curated selection. AI editorial curation is not active. If a ChatGPT task is enabled later, remove the workflow cron to avoid duplicate schedulers.
+Active recurring scheduler: ChatGPT, Monday mornings in Asia/Shanghai, starting 2026-10-26. It reviews the engineering/AI selection and triggers data refresh through a verified commit. GitHub Actions runs only on push or manual dispatch and remains the sole deployment pipeline. Do not add a second cron scheduler.

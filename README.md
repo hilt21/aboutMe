@@ -19,7 +19,7 @@ Defaults: `SITE_URL=https://hilt21.github.io`, `PUBLIC_BASE_PATH=/aboutMe/`. Ove
 - `src/data/github.json`: public contribution calendar, refreshed by `scripts/sync-github.mjs`.
 - `src/data/projects.json`: public metadata for curated repositories, refreshed by `scripts/sync-projects.mjs`.
 
-GitHub Actions refreshes contributions and selected-repository metadata every Monday at 08:17 Asia/Shanghai, and on push/manual dispatch. The pipeline validates, builds and deploys. AI-driven editorial curation is not scheduled; project selection and maturity labels require evidence-based review. Failed collection keeps the last valid snapshot and makes the final report job fail after fallback deployment. Contributions older than ten days are flagged. PR/release activity is neither collected nor displayed.
+The ChatGPT curation task runs on Monday mornings in Asia/Shanghai, reviews public engineering/AI projects and commits verified updates. GitHub Actions refreshes contributions and selected-repository metadata on push/manual dispatch, then validates, builds and deploys. ChatGPT is the only recurring scheduler. Selection and maturity labels require public evidence. Failed collection keeps the last valid snapshot and makes the final report job fail after fallback deployment. Contributions older than ten days are flagged. PR/release activity is neither collected nor displayed.
 
 Descriptions and maturity labels are curated. Stars and pushes do not prove deployment, validation, personal responsibility or business impact. Never publish private repositories, prompts, credentials or company-confidential content.
 
