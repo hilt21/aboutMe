@@ -21,11 +21,11 @@ const stale = data.status !== 'ok' || !data.updatedAt || Date.now() - Date.parse
     <div class="site-insights-content">
       <div class="site-insights-metrics">
         <div class="site-insights-metric">
-          <strong>{data.sampled ? '≈' : ''}{data.totals.visits.toLocaleString('en-US')}</strong>
+          <strong>{data.sampled ? '≈' : ''}{data.totals?.visits.toLocaleString('en-US')}</strong>
           <span data-en="Visits" data-zh="访问次数">Visits</span>
         </div>
         <div class="site-insights-metric">
-          <strong>{data.sampled ? '≈' : ''}{data.totals.pageViews.toLocaleString('en-US')}</strong>
+          <strong>{data.sampled ? '≈' : ''}{data.totals?.pageViews.toLocaleString('en-US')}</strong>
           <span data-en="Page Views" data-zh="页面浏览量">Page Views</span>
         </div>
       </div>
