@@ -18,3 +18,8 @@
 - The user confirmed that the Cloudflare Analytics API token was configured as a GitHub Actions secret.
 - Request: run `Refresh data and deploy Pages` once and verify that Cloudflare GraphQL collection, static snapshot validation, GitHub Pages deployment, and the public Site Insights module work end to end.
 - This documentation-only commit triggers the existing `push` workflow; inspect the resulting run logs and snapshot before recording any verification result. The credential itself is not accessed or published.
+
+### 2026-10-26 retry: repository secret reconfigured
+
+- User reconfigured `CLOUDFLARE_ANALYTICS_TOKEN` under Repository secrets and requested another end-to-end refresh test.
+- This documentation-only push triggers the existing `Refresh data and deploy Pages` pipeline. Examine the run's Cloudflare collection output, refreshed snapshot SHA and Pages deployment to determine whether the secret is now usable. No token is recorded in the repository.
