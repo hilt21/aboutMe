@@ -28,3 +28,29 @@ Descriptions and maturity labels are curated. Stars and pushes do not prove depl
 Three.js primitives, a transparent orthographic scene, ten-second cruise, scroll/pointer acceleration, visibility pausing and reduced-motion support. SVG is the fallback. Browser QA to date covers SVG fallback; GPU rendering remains to be checked on a WebGL-capable device.
 
 Font notices are retained in `public/fonts/licenses`. Astro and Three.js retain upstream licenses. The portrait is a user-approved asset and is not offered for reuse. This repository uses its optimized WebP; the original upload is not included.
+
+## Site Insights (Cloudflare)
+The quiet Site Insights section above the footer shows the last **30 complete UTC days**
+of Page Views, Visits, and the final 7-day trend. Cloudflare Web Analytics is the
+sole telemetry source; browsers never call the Cloudflare GraphQL API.
+
+The Pages workflow reads the RUM GraphQL dataset in six-day chunks, strictly
+filtering the host `hilt21.github.io` and the path `/aboutMe/` to exclude
+other GitHub Pages projects. It generates `src/data/site-analytics.json` and
+validates dates and totals. If Cloudflare samples any daily result, public
+counters carry an approximate sign. Collection errors retain the latest valid
+snapshot, mark it stale, and produce a workflow report failure.
+
+**Required Actions secret:** `CLOUDFLARE_ANALYTICS_TOKEN`. Create a Cloudflare
+API token with minimum Account Analytics read access sufficient to query this
+account's Web Analytics RUM dataset, then save it as a GitHub repository
+Actions secret. Never commit the token or put it in `PUBLIC_*` variables.
+Account ID and site tag in the workflow are identifiers, not credentials.
+Without the secret, the build warns, keeps the verified baseline and eventually
+shows "update overdue".
+
+The *existing* GitHub Pages release workflow gains a **daily 04:20 UTC**
+analytics-only schedule. On the daily event, the GitHub contribution and
+curated project collectors are skipped; the ChatGPT Monday editorial
+curation schedule remains unchanged. GitHub Actions stays the sole
+deployment pipeline. The workflow also supports manual dispatch.
