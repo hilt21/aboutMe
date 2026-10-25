@@ -13,3 +13,10 @@ The user authorizes the ChatGPT task to refresh public contributions and enginee
 7. On failure, preserve snapshots and report the actual blocker. Do not claim an update without deployment success. If Pages is disabled, report that setting. Do not silently change hosts.
 
 Active recurring scheduler: ChatGPT, Monday mornings in Asia/Shanghai, starting 2026-10-26. It reviews the engineering/AI selection and triggers data refresh through a verified commit. GitHub Actions runs only on push or manual dispatch and remains the sole deployment pipeline. Do not add a second cron scheduler.
+
+### Site Insights scope exception (approved 2026-10-26)
+The Pages workflow has one daily 04:20 UTC telemetry-only schedule for
+Cloudflare Web Analytics. It skips GitHub contributions and project selection.
+This intentionally updates the previous no-GitHub-cron restriction for telemetry
+while keeping the Monday ChatGPT editorial scheduler unchanged. Only
+GitHub Actions deploys Pages.
