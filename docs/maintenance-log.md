@@ -12,3 +12,9 @@
 - Ran existing public contribution and selected-project collection scripts successfully. Push workflow remains authoritative for validation, snapshot commit and deployment. Fixed identity, career content, contacts, layout and train were left untouched.
 
 - Recovery verification: run 40080505041 first deployed retained snapshots after public collection HTTP 403. Its build-job retry collected successfully but could not push from the original checkout because main already contained the first snapshot commit (non-fast-forward rejection). This record starts a fresh push workflow from current main; no force push or workflow changes applied.
+
+## 2026-10-26 Site Insights credential smoke test
+
+- The user confirmed that the Cloudflare Analytics API token was configured as a GitHub Actions secret.
+- Request: run `Refresh data and deploy Pages` once and verify that Cloudflare GraphQL collection, static snapshot validation, GitHub Pages deployment, and the public Site Insights module work end to end.
+- This documentation-only commit triggers the existing `push` workflow; inspect the resulting run logs and snapshot before recording any verification result. The credential itself is not accessed or published.
