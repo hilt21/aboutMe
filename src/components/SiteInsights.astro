@@ -1,0 +1,60 @@
+---
+import raw from '../data/site-analytics.json';
+import { SiteAnalyticsSnapshot } from '../lib/schema';
+
+const data = SiteAnalyticsSnapshot.parse(raw);
+const available = data.updatedAt !== null && data.totals !== null;
+const recent = data.daily.slice(-7);
+const peak = Math.max(1, ...recent.map(day => day.pageViews));
+const points = recent.map((day, i) => [Math.round(i * 140 / 6), Math.round(42 - day.pageViews * 34 / peak)].join(',')).join(' ');
+const updatedLabel = data.updatedAt
+  ? new Date(data.updatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' })
+  : 'Awaiting data';
+const stale = data.status !== 'ok' || !data.updatedAt || Date.now() - Date.parse(data.updatedAt) > 48 * 60 * 60 * 1000;
+---
+<section class="site-insights" id="site-insights" aria-label="Site traffic" data-updated={data.updatedAt || ''} data-status={data.status}>
+  <div class="site-insights-heading">
+    <span class="site-insights-eyebrow">SITE INSIGHTS</span>
+    <span class="site-insights-window" data-en="LAST 30 COMPLETE DAYS · UTC" data-zh="最近 30 个完整自然日 · UTC">LAST 30 COMPLETE DAYS · UTC</span>
+  </div>
+  {available ? (
+    <div class="site-insights-content">
+      <div class="site-insights-metrics">
+        <div class="site-insights-metric">
+          <strong>{data.sampled ? '≈' : ''}{data.totals.visits.toLocaleString('en-US')}</strong>
+          <span data-en="Visits" data-zh="访问次数">Visits</span>
+        </div>
+        <div class="site-insights-metric">
+          <strong>{data.sampled ? '≈' : ''}{data.totals.pageViews.toLocaleString('en-US')}</strong>
+          <span data-en="Page Views" data-zh="页面浏览量">Page Views</span>
+        </div>
+      </div>
+      <div class="site-insights-trend">
+        <svg viewBox="0 0 140 48" role="img" aria-label="Page views during the final seven complete UTC days">
+          <polyline points={points} fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span data-en="7-DAY TREND" data-zh="7 天趋势">7-DAY TREND</span>
+      </div>
+    </div>
+  ) : (
+    <p class="site-insights-unavailable" data-en="Site analytics are temporarily unavailable." data-zh="网站访问统计暂不可用。">Site analytics are temporarily unavailable.</p>
+  )}
+  <div class="site-insights-provenance">
+    <span data-en="Cloudflare Web Analytics" data-zh="Cloudflare 网站分析">Cloudflare Web Analytics</span>
+    <span>
+      {available && <span data-en={'Updated ' + updatedLabel + ' · UTC'} data-zh={'更新于 ' + updatedLabel + ' · UTC'}>Updated {updatedLabel} · UTC</span>}
+      {data.sampled && <span data-en=" · sampled estimates" data-zh=" · 采样估算"> · sampled estimates</span>}
+      <span id="site-insights-stale" class="site-insights-stale" data-en=" · update overdue" data-zh=" · 更新延迟" hidden={!stale}> · update overdue</span>
+    </span>
+  </div>
+</section>
+<script>
+const section = document.querySelector<HTMLElement>('#site-insights');
+const mark = document.querySelector<HTMLElement>('#site-insights-stale');
+if (section && mark) {
+  const updated = section.dataset.updated;
+  if (!updated || section.dataset.status !== 'ok' || Date.now() - Date.parse(updated) > 48 * 60 * 60 * 1000) {
+    mark.hidden = false;
+  }
+}
+</script>
