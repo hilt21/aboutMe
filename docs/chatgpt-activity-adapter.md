@@ -81,9 +81,11 @@ typography, spacing and GitHub sage color scale. The visible calendar window
 is the last 183 days, including today in Asia/Shanghai. Existing summary values
 and periods are unchanged, and the underlying 365-day snapshot retention remains.
 
-Codex shows the same five exact Profile metrics and a 14-day thin line/area
-trend. Missing days break both paths: no zero filling or interpolation. Unknown
-calendar days keep a distinct striped dot; the compact legend remains visible.
+Codex retains the same five Profile metrics. Lifetime and peak daily Token
+values use billions (1B = 10^9), rounded to one decimal; exact values remain in
+data details. The trend chart is removed to keep desktop panel heights equal.
+Unknown calendar dates use the same level-0 light fill as GitHub Less, while
+null values, Unknown titles and coverage explanations retain their meaning.
 Verbose source/cutoff/timezone/coverage explanations and the optional Analytics
 status are inside native keyboard-accessible Data details disclosures. Both
 panels provide captioned daily tables for touch and keyboard users. Browser

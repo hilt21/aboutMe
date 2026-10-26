@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {activityCalendar, activityTrend} from '../src/lib/activity-view.ts';
+import {activityCalendar, formatTokenBillions} from '../src/lib/activity-view.ts';
 
 test('half-year view contains 183 dates including today, clips old/future observations and preserves zero vs unknown',()=>{
  const input=[
@@ -17,11 +17,10 @@ test('half-year view contains 183 dates including today, clips old/future observ
 test('half-year calendar retains leap day across civil-date boundaries',()=>{
  const days=activityCalendar([],'2024-03-01');assert.equal(days.length,183);assert.equal(days.at(-2).date,'2024-02-29');
 });
-test('trend breaks both line and area across missing observations, retains zero and isolated points',()=>{
- const days=[3,null,0,6,null,2,null].map((value,i)=>({date:`2026-10-${20+i}`,value,level:value===null?null:1}));
- const trend=activityTrend(days);
- assert.deepEqual(trend.map(s=>s.points.map(p=>p.value)),[[3],[0,6],[2]]);
- assert.equal(trend[1].points[0].y,94);assert.equal(trend[1].points[1].y,10);
- assert.ok(trend.every(s=>!s.line.includes('NaN')&&!s.area.includes('NaN')));
- assert.deepEqual(activityTrend(days.map(d=>({...d,value:null}))),[]);
+test('Token summaries use billions with one decimal, retaining unknown values',()=>{
+ assert.equal(formatTokenBillions(7212512179),'7.2B');
+ assert.equal(formatTokenBillions(425231411),'0.4B');
+ assert.equal(formatTokenBillions(1_250_000_000),'1.3B');
+ assert.equal(formatTokenBillions(0),'0.0B');
+ assert.equal(formatTokenBillions(null),'—');
 });
