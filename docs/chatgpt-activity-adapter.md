@@ -75,13 +75,22 @@ outside this repository; they are not relabeled as current official observations
 
 ## P3: website integration
 
-Existing Codex tab now renders five Profile metrics, a 365-date Token calendar,
-14-calendar-day bars, observation coverage, unknown/zero legend, daily table,
-source, stats_as_of, last_synced_at and latest observed date. It preserves the
-site's bilingual text mechanism and existing visual styles. Missing dates use
-stripes; zeros use the zero-level color. Browser marks snapshots over 48 hours
-old as overdue even when the static page has not rebuilt. Source cutoff remains
-unknown, regardless of a successful sync. Optional analytics stays separate.
+Activity displays Codex on the left and GitHub on the right above 900px; at
+900px and below it stacks Codex first. Both use the same round-dot calendar,
+typography, spacing and GitHub sage color scale. The visible calendar window
+is the last 183 days, including today in Asia/Shanghai. Existing summary values
+and periods are unchanged, and the underlying 365-day snapshot retention remains.
+
+Codex shows the same five exact Profile metrics and a 14-day thin line/area
+trend. Missing days break both paths: no zero filling or interpolation. Unknown
+calendar days keep a distinct striped dot; the compact legend remains visible.
+Verbose source/cutoff/timezone/coverage explanations and the optional Analytics
+status are inside native keyboard-accessible Data details disclosures. Both
+panels provide captioned daily tables for touch and keyboard users. Browser
+marks Codex snapshots over 48 hours old as overdue. Source cutoff remains
+unknown, regardless of a successful sync. Existing bilingual switching remains.
+
+See `docs/activity-layout-verification.md` for this layout revision's evidence.
 
 ## P4: local scheduling and release boundary
 

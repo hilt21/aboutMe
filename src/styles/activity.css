@@ -1,0 +1,40 @@
+.activity-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px}
+.activity-panel{min-width:0;padding-top:6px}
+.activity-panel-heading{display:flex;align-items:center;justify-content:space-between;min-height:36px;margin-bottom:24px}
+.activity-panel-heading h3{font:500 17px var(--sans);letter-spacing:-.3px;margin:0}
+.activity-panel-heading a{font-size:16px;color:var(--muted)}
+.activity-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-content:start;gap:22px 14px;min-height:150px;margin-bottom:18px}
+.activity-metrics>div{min-width:0}
+.activity-metrics span{display:block;color:var(--muted);font-size:10px;line-height:1.5;margin-bottom:7px}
+.activity-metrics strong{font-size:21px;line-height:1.25;font-weight:450;letter-spacing:-.6px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.activity-calendar{min-width:0}
+.activity-months{display:grid;grid-template-columns:repeat(var(--calendar-columns),minmax(0,1fr));margin-left:20px;margin-bottom:9px;color:var(--muted);font:8px var(--mono)}
+.activity-months span{white-space:nowrap}
+.activity-calendar-row{display:flex;gap:8px}
+.activity-weekdays{width:12px;flex-shrink:0;display:grid;grid-template-rows:repeat(7,1fr);color:var(--muted);font:7px var(--mono);align-items:center}
+.activity-weekdays span:nth-child(1){grid-row:2}.activity-weekdays span:nth-child(2){grid-row:4}.activity-weekdays span:nth-child(3){grid-row:6}
+.activity-dots{display:grid;grid-auto-flow:column;grid-template-columns:repeat(var(--calendar-columns),minmax(0,1fr));grid-template-rows:repeat(7,1fr);gap:3px;flex:1;min-width:0}
+.activity-dot{width:100%;aspect-ratio:1;border-radius:50%;display:block}
+.activity-dot.blank{visibility:hidden}
+.activity-dot.unknown,.activity-dot-legend .unknown{background:repeating-linear-gradient(135deg,transparent,transparent 2px,#b7b8b1 2px,#b7b8b1 3px);box-shadow:inset 0 0 0 1px #c9cdc2}
+.activity-calendar-foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;margin-top:13px;color:var(--muted);font:8px var(--mono)}
+.activity-dot-legend{display:flex;align-items:center;gap:4px}
+.activity-dot-legend i{display:block;width:8px;height:8px;border-radius:50%}
+.activity-dot-legend span{margin:0 2px}
+.activity-trend{margin-top:30px;color:#647e70}
+.activity-chart-label{font-size:10px;color:var(--muted)}
+.activity-trend svg{display:block;width:100%;height:100px;margin-top:14px;overflow:visible}
+.trend-line{fill:none;stroke:currentColor;stroke-width:1.5;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.trend-area{fill:currentColor;opacity:.09}
+.activity-trend circle{fill:currentColor}
+.activity-trend-dates{display:flex;justify-content:space-between;color:var(--muted);font:8px var(--mono);margin-top:7px}
+.activity-info{margin-top:24px;color:var(--muted);font-size:11px;line-height:1.8}
+.activity-info summary{cursor:pointer;min-height:28px;font-size:10px;width:fit-content}
+.activity-info p{margin:12px 0}
+.activity-info summary:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.activity-provenance{margin:12px 0}.activity-provenance>div{display:flex;flex-wrap:wrap;gap:8px}.activity-provenance dd{margin:0;overflow-wrap:anywhere}
+.activity-table{max-height:230px;overflow:auto;margin:14px 0}.activity-table table{width:100%;border-collapse:collapse;text-align:left;font-size:11px}.activity-table td,.activity-table th{border-bottom:1px solid var(--line);padding:5px}.activity-table caption{text-align:left}
+.activity-overdue{color:var(--accent);font-size:10px}
+@media(min-width:901px) and (max-width:1100px){.activity-metrics{grid-template-columns:repeat(2,minmax(0,1fr));min-height:218px}}
+@media(max-width:900px){.activity-grid{grid-template-columns:minmax(0,1fr);gap:38px}.activity-panel+.activity-panel{border-top:1px solid var(--line);padding-top:30px}.activity-metrics{min-height:0}}
+@media(max-width:500px){.activity-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 16px;margin-bottom:28px}.activity-metrics strong{font-size:22px}.activity-dots{gap:2px}.activity-panel-heading{margin-bottom:24px}.activity-calendar-foot{font-size:7px;gap:9px}.activity-dot-legend{gap:3px}.activity-dot-legend i{width:7px;height:7px}}

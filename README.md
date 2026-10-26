@@ -55,9 +55,9 @@ curated project collectors are skipped; the ChatGPT Monday editorial
 curation schedule remains unchanged. GitHub Actions stays the sole
 deployment pipeline. The workflow also supports manual dispatch.
 
-## ChatGPT / Codex activity (development)
+## ChatGPT / Codex activity
 
-The existing Codex tab reads a verified aggregate-only snapshot. On a locally
+The Activity section shows Codex first and GitHub second: side by side on desktop, stacked on mobile. Both calendars show the last 183 days; summary metrics retain their original periods. Data details and daily values are available in collapsed disclosures. The Codex panel reads a verified aggregate-only snapshot. On a locally
 signed-in Codex machine, Node >=22.18: `npm run sync:activity` or
 `npm run watch:activity -- --interval-minutes 360`. Stop the foreground watcher
 to end scheduling; it never pushes or deploys. Unknown dates stay unknown.
