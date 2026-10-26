@@ -54,3 +54,13 @@ analytics-only schedule. On the daily event, the GitHub contribution and
 curated project collectors are skipped; the ChatGPT Monday editorial
 curation schedule remains unchanged. GitHub Actions stays the sole
 deployment pipeline. The workflow also supports manual dispatch.
+
+## ChatGPT / Codex activity (development)
+
+The existing Codex tab reads a verified aggregate-only snapshot. On a locally
+signed-in Codex machine, Node >=22.18: `npm run sync:activity` or
+`npm run watch:activity -- --interval-minutes 360`. Stop the foreground watcher
+to end scheduling; it never pushes or deploys. Unknown dates stay unknown.
+Usage Analytics is optional, offline and requires explicit import flags.
+See [implementation, source limits and verification](docs/chatgpt-activity-adapter.md).
+Publish reviewed snapshots through the existing Pages branch/PR workflow only.

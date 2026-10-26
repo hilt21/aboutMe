@@ -1,0 +1,46 @@
+{
+  "checked_on": "2026-10-26",
+  "repository": "hilt21/aboutMe",
+  "source": "codex-app-server",
+  "source_daily_dates": 80,
+  "source_latest_date": "2026-10-25",
+  "stats_as_of": null,
+  "source_timezone": null,
+  "automated": {
+    "schema_and_type_check": "passed",
+    "tests_passed": 24,
+    "astro_build": "passed",
+    "source_live_sync": "passed",
+    "scheduler_once_live": "passed"
+  },
+  "browser_automation": {
+    "browser": "local Chrome",
+    "desktop": [
+      1470,
+      900
+    ],
+    "mobile_viewport": [
+      320,
+      568
+    ],
+    "calendar_dates": 365,
+    "daily_table_rows": 80,
+    "document_width": 320,
+    "document_scroll_width": 320,
+    "calendar_horizontal_scroll": "passed",
+    "bilingual": "passed"
+  },
+  "human_manual_qa": "not performed",
+  "unverified": [
+    "physical phone",
+    "mobile Safari",
+    "screen reader",
+    "six-hour unattended cycle",
+    "source statistical cutoff",
+    "source daily time zone",
+    "exact source lag",
+    "bucket-by-bucket GUI comparison",
+    "real optional Analytics export"
+  ],
+  "production_deployed": false
+}
