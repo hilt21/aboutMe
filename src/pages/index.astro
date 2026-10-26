@@ -46,7 +46,7 @@ import {experienceYears,profileYear} from '../lib/experience';
 function refreshExperience(){const year=profileYear();document.querySelectorAll<HTMLElement>('[data-experience-years]').forEach(el=>{el.textContent=`${experienceYears(Number(el.dataset.experienceYears),Number(el.dataset.baselineYear),year)}+`;});}
 refreshExperience();document.addEventListener('visibilitychange',refreshExperience);setInterval(refreshExperience,3600000);
 const dock=document.querySelector<HTMLElement>('.profile-dock')!;
-function measureLayout(){document.documentElement.style.setProperty('--dock-height',`${dock.getBoundingClientRect().height}px`);const career=document.querySelector<HTMLElement>('.career-track')!;if(innerWidth<=640){const top=career.getBoundingClientRect().top+scrollY;career.style.minHeight=Math.max(0,innerHeight-top-8)+'px'}else career.style.minHeight=''}
+function measureLayout(){document.documentElement.style.setProperty('--dock-height',`${dock.getBoundingClientRect().height}px`)}
 new ResizeObserver(measureLayout).observe(dock);window.addEventListener('resize',measureLayout);document.fonts.ready.then(measureLayout);measureLayout();
 let locale='en';try{locale=localStorage.getItem('profile-language')||'en';}catch{}
 function setLanguage(lang:string){document.documentElement.lang=lang==='zh'?'zh-CN':'en';document.querySelectorAll<HTMLElement>('[data-en][data-zh]').forEach(el=>el.textContent=el.dataset[lang]||'');const b=document.querySelector<HTMLButtonElement>('#language')!;b.textContent=lang==='en'?'中文 ↗':'EN ↗';b.setAttribute('aria-label',lang==='en'?'Switch to Chinese':'Switch to English');try{localStorage.setItem('profile-language',lang)}catch{}requestAnimationFrame(measureLayout)}
