@@ -1,0 +1,70 @@
+---
+import raw from '../data/chatgpt-activity.json';
+import analyticsRaw from '../data/chatgpt-analytics.json';
+import { activitySchema, calendar } from '../lib/chatgpt-activity';
+const data = activitySchema.parse(raw);
+const analytics = activitySchema.parse(analyticsRaw);
+const end = new Intl.DateTimeFormat('en-CA', {timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+const days = calendar(data,end);
+const offset = new Date(days[0].date+'T00:00:00Z').getUTCDay();
+const months = Array.from({length:Math.ceil((offset+365)/7)},(_,i)=>{
+  const day=days[i*7-offset];
+  return day && (i===0 || Number(day.date.slice(-2))<=7) ? new Date(day.date+'T00:00:00Z').toLocaleDateString('en',{month:'short',timeZone:'UTC'}) : '';
+});
+const recent = days.slice(-14);
+const max = Math.max(1,...recent.map(d=>d.value??0));
+const level = (v:number|null) => v===null?'unknown':v===0?'level-0':v<1e7?'level-1':v<5e7?'level-2':v<1e8?'level-3':'level-4';
+const metrics = [
+  ['lifetimeTokens','Lifetime tokens','累计 Token'],
+  ['peakDailyTokens','Peak daily tokens','单日 Token 峰值'],
+  ['longestRunningTurnSec','Longest task · seconds','最长任务 · 秒'],
+  ['longestStreakDays','Longest streak · days','最长连续 · 天'],
+  ['currentStreakDays','Current streak · days','当前连续 · 天'],
+] as const;
+const missing = days.filter(d=>d.value===null).length;
+const stale = !data.last_synced_at || Date.now()-Date.parse(data.last_synced_at)>48*3600000;
+---
+<div class="chatgpt-activity" data-synced={data.last_synced_at??''}>
+  <p class="activity-source" data-en="Codex token activity · official account summary" data-zh="Codex Token 活动 · 官方账户汇总">Codex token activity · official account summary</p>
+  <div class="chatgpt-metrics">
+    {metrics.map(([key,en,zh])=><div><strong>{data.summary[key]?.toLocaleString('en-US')??'—'}</strong><span data-en={en} data-zh={zh}>{en}</span></div>)}
+  </div>
+  <p class="activity-source" data-en={`${365-missing}/365 dates observed · ${missing} unknown · source time zone unverified`} data-zh={`${365-missing}/365 天有观测 · ${missing} 天未知 · 来源时区未验证`}>{365-missing}/365 dates observed · {missing} unknown · source time zone unverified</p>
+  <div class="calendar-scroll" tabindex="0" role="region" aria-label="365-day Token calendar; scroll horizontally. Full values in daily data below.">
+    <div class="calendar-inner"><div class="calendar-months">{months.map(label=><span>{label}</span>)}</div>
+      <div class="calendar-row"><div class="day-labels"><span>Mon</span><span>Wed</span><span>Fri</span></div>
+        <div class="heatmap" role="img" aria-label={`365 dates, ${missing} unknown. Unknown is not zero. Source time zone unverified.`}>
+          {Array.from({length:offset},()=> <span class="day blank"></span>)}
+          {days.map(d=><span class={`day ${level(d.value)}`} title={`${d.date}: ${d.value===null?'Unknown / 未知':d.value.toLocaleString('en-US')+' tokens'}`}></span>)}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="activity-source activity-legend"><span class="day unknown"></span><span data-en="Unknown" data-zh="未知">Unknown</span><span class="day level-0"></span><span>0</span><span class="day level-1"></span><span>&lt;10M</span><span class="day level-2"></span><span>&lt;50M</span><span class="day level-3"></span><span>&lt;100M</span><span class="day level-4"></span><span>≥100M</span></div>
+  <div class="activity-trend"><span class="activity-source" data-en="Last 14 calendar days · Token trend" data-zh="最近 14 个自然日 · Token 趋势">Last 14 calendar days · Token trend</span>
+    <div class="activity-bars" role="img" aria-label="Fourteen-day Token trend; striped columns mean unknown, not zero.">{recent.map(d=><span class={d.value===null?'unknown':''} style={`--bar-height:${d.value===null?100:Math.max(2,d.value/max*100)}%`} title={`${d.date}: ${d.value??'Unknown / 未知'}`}><i></i></span>)}</div>
+    <div class="activity-source activity-range"><span>{recent[0].date}</span><span>{end}</span></div>
+  </div>
+  <p class="activity-source" data-en="Profile and web analytics may update at different times. Missing dates are never filled with zero. Ordinary Chat conversations are not measured here." data-zh="个人资料与网页分析可能在不同时间更新。缺失日期不会补零。此处不统计普通 Chat 对话。">Profile and web analytics may update at different times. Missing dates are never filled with zero. Ordinary Chat conversations are not measured here.</p>
+  <dl class="activity-provenance">
+    <div><dt>source</dt><dd>{data.source}</dd></div>
+    <div><dt>stats_as_of</dt><dd data-en="Unknown · not supplied" data-zh="未知 · 来源未提供">Unknown · not supplied</dd></div>
+    <div><dt>last_synced_at</dt><dd>{data.last_synced_at??'—'}</dd></div>
+    <div><dt data-en="Last observed date" data-zh="最晚观测日期">Last observed date</dt><dd>{data.daily.at(-1)?.date??'—'}</dd></div>
+  </dl>
+  <p class="activity-source activity-overdue" hidden={!stale} data-en="Update overdue or unavailable · retaining last verified snapshot" data-zh="更新延迟或暂不可用 · 保留上次验证快照">Update overdue or unavailable · retaining last verified snapshot</p>
+  <details class="activity-daily"><summary data-en="Daily values and optional Usage Analytics" data-zh="逐日数值与可选 Usage Analytics">Daily values and optional Usage Analytics</summary>
+    <p class="activity-source" data-en="Source date labels are preserved. The 365-day display ends on today's Asia/Shanghai date; this does not establish the source's daily time zone." data-zh="保留来源日期标签。365 天展示窗口截至上海时区今天；这不代表来源采用上海时区划日。">Source date labels are preserved. The 365-day display ends on today's Asia/Shanghai date; this does not establish the source's daily time zone.</p>
+    <div class="activity-table"><table><caption data-en="Observed daily Token totals; omitted dates are unknown" data-zh="已观测的每日 Token 总数；省略日期为未知">Observed daily Token totals; omitted dates are unknown</caption><thead><tr><th>Date / 日期</th><th>Tokens</th></tr></thead><tbody>{data.daily.map(d=><tr><th scope="row">{d.date}</th><td>{d.value.toLocaleString('en-US')}</td></tr>)}</tbody></table></div>
+    <p class="activity-source" data-en="Usage Analytics · workspace turns · optional local import, separate from Token activity" data-zh="Usage Analytics · 工作区 turns · 可选本地导入，与 Token 活动分别统计">Usage Analytics · workspace turns · optional local import, separate from Token activity</p>
+    {analytics.last_synced_at?<><p class="activity-source">source: {analytics.source} · stats_as_of: {analytics.stats_as_of??'unknown'} · last_synced_at: {analytics.last_synced_at}</p><div class="activity-table"><table><thead><tr><th>Date / 日期</th><th>Workspace turns</th></tr></thead><tbody>{analytics.daily.map(d=><tr><th scope="row">{d.date}</th><td>{d.value}</td></tr>)}</tbody></table></div></>:<p class="activity-source" data-en="Not imported · no verified Usage Analytics snapshot" data-zh="未导入 · 尚无已验证 Usage Analytics 快照">Not imported · no verified Usage Analytics snapshot</p>}
+  </details>
+</div>
+<style>
+.chatgpt-activity{container-type:inline-size;padding:22px 0;min-width:0}.chatgpt-metrics{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px;margin:20px 0}.chatgpt-metrics strong{font-size:clamp(15px,2vw,23px);font-weight:500;display:block;overflow-wrap:anywhere}.chatgpt-metrics span,.activity-source,.activity-provenance{font-size:11px;line-height:1.7;color:var(--muted,#72746d)}.chatgpt-metrics span{display:block;margin-top:5px}.unknown{background:repeating-linear-gradient(135deg,transparent,transparent 2px,#b7b8b1 2px,#b7b8b1 3px)!important;outline:1px solid #d5d5ce;outline-offset:-1px}.activity-legend{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin:12px 0}.activity-legend .day{width:12px;height:12px;flex:0 0 12px}.activity-trend{max-width:430px;margin:24px 0}.activity-bars{height:65px;display:flex;align-items:end;gap:7px;margin-top:10px}.activity-bars>span{flex:1;height:var(--bar-height);min-height:2px;position:relative}.activity-bars i{display:block;height:100%;background:#647e70}.activity-bars>.unknown i{background:transparent}.activity-range{display:flex;justify-content:space-between}.activity-provenance{margin:18px 0;display:grid;gap:4px}.activity-provenance>div{display:flex;gap:12px;flex-wrap:wrap}.activity-provenance dt{font-family:monospace}.activity-provenance dd{margin:0;overflow-wrap:anywhere}.activity-overdue{color:#9b5c39}.activity-daily summary{font-size:12px;cursor:pointer;min-height:30px}.activity-table{max-height:230px;overflow:auto;margin:12px 0}.activity-table table{width:100%;font-size:12px;text-align:left;border-collapse:collapse}.activity-table th,.activity-table td{padding:6px;border-bottom:1px solid #e4e3dc}.activity-table caption{text-align:left}.calendar-scroll:focus-visible{outline:2px solid #647e70;outline-offset:3px}@container(max-width:600px){.chatgpt-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.chatgpt-metrics strong{font-size:21px}}
+</style>
+<script>
+const activity=document.querySelector<HTMLElement>('.chatgpt-activity');
+const notice=activity?.querySelector<HTMLElement>('.activity-overdue');
+if(activity && notice && (!activity.dataset.synced || Date.now()-Date.parse(activity.dataset.synced)>48*3600000)) notice.hidden=false;
+</script>

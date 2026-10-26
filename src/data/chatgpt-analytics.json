@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "source": "usage-analytics-import",
+  "metric": "workspace-turns",
+  "source_timezone": null,
+  "stats_as_of": null,
+  "last_synced_at": null,
+  "summary": {
+    "lifetimeTokens": null,
+    "peakDailyTokens": null,
+    "longestRunningTurnSec": null,
+    "currentStreakDays": null,
+    "longestStreakDays": null
+  },
+  "daily": []
+}
