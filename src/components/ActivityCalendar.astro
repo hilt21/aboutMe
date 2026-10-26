@@ -1,0 +1,28 @@
+---
+import type { CalendarDay } from '../lib/activity-view';
+interface Props { days: CalendarDay[]; label: string; metric: string; }
+const { days, label, metric } = Astro.props;
+const offset = new Date(days[0].date + 'T00:00:00Z').getUTCDay();
+const columns = Math.ceil((offset + days.length) / 7);
+let previousMonth = '';
+const months = Array.from({length: columns}, (_, i) => {
+  const day = days[Math.max(0, i * 7 - offset)];
+  if (!day) return '';
+  const month = day.date.slice(0, 7);
+  const show = month !== previousMonth && (i > 0 || Number(day.date.slice(-2)) <= 7);
+  previousMonth = month;
+  return show ? new Date(day.date + 'T00:00:00Z').toLocaleDateString('en', {month:'short',timeZone:'UTC'}) : '';
+});
+const unknown = days.filter(day => day.value === null).length;
+---
+<div class="activity-calendar" role="group" aria-label={label} style={`--calendar-columns:${columns}`}>
+  <div class="activity-months" aria-hidden="true">{months.map(month => <span>{month}</span>)}</div>
+  <div class="activity-calendar-row">
+    <div class="activity-weekdays" aria-hidden="true"><span>M</span><span>W</span><span>F</span></div>
+    <div class="activity-dots" role="img" aria-label={`${label}: ${days.length} days, ${unknown} unknown; unknown is not zero.`}>
+      {Array.from({length: offset}, () => <span class="activity-dot blank"></span>)}
+      {days.map(day => <span class:list={['activity-dot', day.value === null ? 'unknown level-0' : `level-${day.level}`]} title={`${day.date}: ${day.value === null ? 'Unknown / 未知' : day.value.toLocaleString('en-US') + ' ' + metric}`}></span>)}
+    </div>
+  </div>
+  <div class="activity-calendar-foot"><span>{days[0].date} – {days.at(-1)?.date}</span><div class="activity-dot-legend" aria-label="Activity intensity"><span data-en="Less" data-zh="少">Less</span>{[0,1,2,3,4].map(level => <i class={`level-${level}`}></i>)}<span data-en="More" data-zh="多">More</span>{unknown > 0 && <><i class="unknown level-0"></i><span data-en="Unknown" data-zh="未知">Unknown</span></>}</div></div>
+</div>
