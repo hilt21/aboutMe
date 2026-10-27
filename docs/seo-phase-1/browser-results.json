@@ -524,5 +524,6 @@
   ],
   "preferenceCases": 3,
   "noJavaScriptCases": 2,
-  "blockedStorage": true
+  "blockedStorage": true,
+  "ordinaryPreviewLinks": true
 }
