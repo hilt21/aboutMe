@@ -20,3 +20,12 @@ Cloudflare Web Analytics. It skips GitHub contributions and project selection.
 This intentionally updates the previous no-GitHub-cron restriction for telemetry
 while keeping the Monday ChatGPT editorial scheduler unchanged. Only
 GitHub Actions deploys Pages.
+
+### Codex local daily sync exception (approved 2026-10-27)
+
+A local Mac LaunchAgent checks the latest 21:00 Asia/Shanghai deadline and catches
+up after sleep/login. It may push validated, changed Codex aggregate snapshots
+directly to main; acquisition timestamps alone never trigger publication.
+No credentials leave the Mac. This does not alter editorial scheduling or add a
+cloud collector. GitHub Actions remains the sole release pipeline.
+See `docs/activity-daily-sync.md` for operation and failure boundaries.

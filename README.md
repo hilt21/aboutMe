@@ -65,6 +65,11 @@ Usage Analytics is optional, offline and requires explicit import flags.
 See [implementation, source limits and verification](docs/chatgpt-activity-adapter.md).
 Publish reviewed snapshots through the existing Pages branch/PR workflow only.
 
+Approved daily-sync exception (2026-10-27): the local Mac may publish validated,
+changed Codex aggregate snapshots directly to main at 21:00 Asia/Shanghai, with
+wake/login catch-up. Credentials remain local; Pages remains the only deployment
+pipeline. See [daily sync operations](docs/activity-daily-sync.md).
+
 ## SEO and language URLs
 
 English is statically generated at `/aboutMe/`; Chinese at `/aboutMe/zh/`.
