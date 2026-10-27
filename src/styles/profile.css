@@ -81,3 +81,6 @@
 
 @media(max-width:360px){html[lang=en] .profile-page .background-intro h2{font-size:16px;letter-spacing:-.5px} .profile-page .career-nodes>li{padding-bottom:8px}.profile-page .career-detail summary{min-height:26px}.profile-page .career-track{padding-bottom:14px}}
 @media(max-width:360px){.profile-page .profile-dock .hero{padding-top:12px}.profile-page .profile-heading{gap:4px}.profile-page .profile-dock .train-divider{margin-top:48px}.profile-page .experience-label .label-full,.profile-page .bio-full{display:none}.profile-page .experience-label .label-short,.profile-page .bio-compact{display:inline}.profile-page .background-section{padding-top:10px}.profile-page .background-bio{margin-top:4px}.profile-page .career-nodes>li{padding-bottom:0}.profile-page .career-track{margin-top:4px}.profile-page .career-track .track-heading{margin-bottom:5px}}
+
+/* Keep the existing switch appearance when using a crawlable link. */
+.profile-page .language-toggle{text-decoration:none}

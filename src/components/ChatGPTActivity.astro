@@ -1,4 +1,6 @@
 ---
+interface Props { locale: 'en' | 'zh'; }
+const { locale } = Astro.props;
 import raw from '../data/chatgpt-activity.json';
 import analyticsRaw from '../data/chatgpt-analytics.json';
 import { activitySchema } from '../lib/chatgpt-activity';
@@ -20,26 +22,26 @@ const missing = days.filter(day => day.value === null).length;
 const stale = !data.last_synced_at || Date.now()-Date.parse(data.last_synced_at)>48*3600000;
 ---
 <section class="activity-panel chatgpt-activity" id="codex-panel" aria-labelledby="codex-heading" data-synced={data.last_synced_at??''}>
-  <div class="activity-panel-heading"><h3 id="codex-heading">Codex</h3><span class="activity-overdue" hidden={!stale} data-en="Update overdue" data-zh="更新延迟">Update overdue</span></div>
+  <div class="activity-panel-heading"><h3 id="codex-heading">Codex</h3><span class="activity-overdue" hidden={!stale}>{locale === 'zh' ? "更新延迟" : "Update overdue"}</span></div>
   <div class="activity-metrics">
-    {metrics.map(([key,en,zh]) => <div><span data-en={en} data-zh={zh}>{en}</span><strong title={data.summary[key]?.toLocaleString('en-US')??'Unknown / 未知'}>{key==='lifetimeTokens'||key==='peakDailyTokens'?formatTokenBillions(data.summary[key]):data.summary[key]?.toLocaleString('en-US')??'—'}</strong></div>)}
+    {metrics.map(([key,en,zh]) => <div><span>{locale === 'zh' ? zh : en}</span><strong title={data.summary[key]?.toLocaleString('en-US')??'Unknown / 未知'}>{key==='lifetimeTokens'||key==='peakDailyTokens'?formatTokenBillions(data.summary[key]):data.summary[key]?.toLocaleString('en-US')??'—'}</strong></div>)}
   </div>
-  <ActivityCalendar days={days} label="Codex Token calendar · last 183 days" metric="tokens" />
-  <details class="activity-info"><summary data-en="Data details" data-zh="数据说明">Data details</summary>
-    <p data-en={`${183-missing}/183 dates observed · ${missing} unknown. Unknown is not zero. Source daily time zone is unverified.`} data-zh={`${183-missing}/183 天有观测 · ${missing} 天未知。未知不代表零活动。来源划日时区未验证。`}>{183-missing}/183 dates observed · {missing} unknown. Unknown is not zero. Source daily time zone is unverified.</p>
-    <p data-en="Calendar: last 183 days, ending on today's Asia/Shanghai date. Summary metrics keep their original periods. Ordinary Chat conversations are not measured here. Profile and web analytics may update at different times." data-zh="热力图展示最近 183 天，展示窗口截至上海时区今天。汇总指标保留原统计范围，不统计普通 Chat 对话。个人资料与网页分析可能异步更新。">Calendar: last 183 days, ending on today's Asia/Shanghai date. Summary metrics keep their original periods. Ordinary Chat conversations are not measured here. Profile and web analytics may update at different times.</p>
+  <ActivityCalendar locale={locale} days={days} label="Codex Token calendar · last 183 days" metric="tokens" />
+  <details class="activity-info"><summary>{locale === 'zh' ? "数据说明" : "Data details"}</summary>
+    <p>{locale === 'zh' ? `${183-missing}/183 天有观测 · ${missing} 天未知。未知不代表零活动。来源划日时区未验证。` : `${183-missing}/183 dates observed · ${missing} unknown. Unknown is not zero. Source daily time zone is unverified.`}</p>
+    <p>{locale === 'zh' ? "热力图展示最近 183 天，展示窗口截至上海时区今天。汇总指标保留原统计范围，不统计普通 Chat 对话。个人资料与网页分析可能异步更新。" : "Calendar: last 183 days, ending on today's Asia/Shanghai date. Summary metrics keep their original periods. Ordinary Chat conversations are not measured here. Profile and web analytics may update at different times."}</p>
     <dl class="activity-provenance">
-      <div><dt data-en="Source" data-zh="来源">Source</dt><dd>{data.source}</dd></div>
-      <div><dt data-en="Statistics cutoff" data-zh="统计截止">Statistics cutoff</dt><dd data-en="Unknown · not supplied" data-zh="未知 · 来源未提供">Unknown · not supplied</dd></div>
-      <div><dt data-en="Last synced" data-zh="最近同步">Last synced</dt><dd>{data.last_synced_at??'—'}</dd></div>
-      <div><dt data-en="Latest observed date" data-zh="最晚观测日期">Latest observed date</dt><dd>{data.daily.at(-1)?.date??'—'}</dd></div>
+      <div><dt>{locale === 'zh' ? "来源" : "Source"}</dt><dd>{data.source}</dd></div>
+      <div><dt>{locale === 'zh' ? "统计截止" : "Statistics cutoff"}</dt><dd>{locale === 'zh' ? "未知 · 来源未提供" : "Unknown · not supplied"}</dd></div>
+      <div><dt>{locale === 'zh' ? "最近同步" : "Last synced"}</dt><dd>{data.last_synced_at??'—'}</dd></div>
+      <div><dt>{locale === 'zh' ? "最晚观测日期" : "Latest observed date"}</dt><dd>{data.daily.at(-1)?.date??'—'}</dd></div>
     </dl>
-    <p data-en="Token summary display: 1B = 1,000,000,000 tokens, rounded to one decimal place. Exact values are retained below." data-zh="Token 汇总展示：1B = 十亿 Token，保留一位小数。下方保留精确数值。">Token summary display: 1B = 1,000,000,000 tokens, rounded to one decimal place. Exact values are retained below.</p>
-    <dl class="activity-provenance"><div><dt data-en="Exact lifetime tokens" data-zh="精确累计 Token">Exact lifetime tokens</dt><dd>{data.summary.lifetimeTokens?.toLocaleString('en-US')??'—'}</dd></div><div><dt data-en="Exact peak daily tokens" data-zh="精确单日 Token 峰值">Exact peak daily tokens</dt><dd>{data.summary.peakDailyTokens?.toLocaleString('en-US')??'—'}</dd></div></dl>
-    <p class="activity-thresholds" data-en="Token intensity: 0 · <10M · <50M · <100M · ≥100M" data-zh="Token 色阶：0 · 低于一千万 · 低于五千万 · 低于一亿 · 一亿及以上">Token intensity: 0 · &lt;10M · &lt;50M · &lt;100M · ≥100M</p>
-    <div class="activity-table"><table><caption data-en="Observed daily Token totals; omitted dates are unknown" data-zh="已观测的每日 Token 总数；省略日期为未知">Observed daily Token totals; omitted dates are unknown</caption><thead><tr><th>Date / 日期</th><th>Tokens</th></tr></thead><tbody>{data.daily.map(day => <tr><th scope="row">{day.date}</th><td>{day.value.toLocaleString('en-US')}</td></tr>)}</tbody></table></div>
-    <p data-en="Usage Analytics · workspace turns · separate optional import" data-zh="Usage Analytics · 工作区 turns · 单独可选导入">Usage Analytics · workspace turns · separate optional import</p>
-    {analytics.last_synced_at ? <><p>{analytics.source} · {analytics.last_synced_at}</p><div class="activity-table"><table><thead><tr><th>Date / 日期</th><th>Workspace turns</th></tr></thead><tbody>{analytics.daily.map(day => <tr><th scope="row">{day.date}</th><td>{day.value}</td></tr>)}</tbody></table></div></> : <p data-en="Not imported · no verified Usage Analytics snapshot" data-zh="未导入 · 尚无已验证 Usage Analytics 快照">Not imported · no verified Usage Analytics snapshot</p>}
+    <p>{locale === 'zh' ? "Token 汇总展示：1B = 十亿 Token，保留一位小数。下方保留精确数值。" : "Token summary display: 1B = 1,000,000,000 tokens, rounded to one decimal place. Exact values are retained below."}</p>
+    <dl class="activity-provenance"><div><dt>{locale === 'zh' ? "精确累计 Token" : "Exact lifetime tokens"}</dt><dd>{data.summary.lifetimeTokens?.toLocaleString('en-US')??'—'}</dd></div><div><dt>{locale === 'zh' ? "精确单日 Token 峰值" : "Exact peak daily tokens"}</dt><dd>{data.summary.peakDailyTokens?.toLocaleString('en-US')??'—'}</dd></div></dl>
+    <p class="activity-thresholds">{locale === 'zh' ? "Token 色阶：0 · 低于一千万 · 低于五千万 · 低于一亿 · 一亿及以上" : "Token intensity: 0 · <10M · <50M · <100M · ≥100M"}</p>
+    <div class="activity-table"><table><caption>{locale === 'zh' ? "已观测的每日 Token 总数；省略日期为未知" : "Observed daily Token totals; omitted dates are unknown"}</caption><thead><tr><th>Date / 日期</th><th>Tokens</th></tr></thead><tbody>{data.daily.map(day => <tr><th scope="row">{day.date}</th><td>{day.value.toLocaleString('en-US')}</td></tr>)}</tbody></table></div>
+    <p>{locale === 'zh' ? "Usage Analytics · 工作区 turns · 单独可选导入" : "Usage Analytics · workspace turns · separate optional import"}</p>
+    {analytics.last_synced_at ? <><p>{analytics.source} · {analytics.last_synced_at}</p><div class="activity-table"><table><thead><tr><th>Date / 日期</th><th>Workspace turns</th></tr></thead><tbody>{analytics.daily.map(day => <tr><th scope="row">{day.date}</th><td>{day.value}</td></tr>)}</tbody></table></div></> : <p>{locale === 'zh' ? "未导入 · 尚无已验证 Usage Analytics 快照" : "Not imported · no verified Usage Analytics snapshot"}</p>}
   </details>
 </section>
 <script>

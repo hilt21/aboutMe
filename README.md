@@ -64,3 +64,14 @@ to end scheduling; it never pushes or deploys. Unknown dates stay unknown.
 Usage Analytics is optional, offline and requires explicit import flags.
 See [implementation, source limits and verification](docs/chatgpt-activity-adapter.md).
 Publish reviewed snapshots through the existing Pages branch/PR workflow only.
+
+## SEO and language URLs
+
+English is statically generated at `/aboutMe/`; Chinese at `/aboutMe/zh/`.
+The URL controls language; the old localStorage preference is retired. Language
+links work without JavaScript and remain on the current preview/production host.
+`npm run build` includes `npm run test:seo`, which validates generated HTML,
+canonical/hreflang, profile JSON-LD, sitemap, local assets and links.
+See [phase-1 evidence, GitHub Pages robots limits, Search Console owner steps and
+pending acceptance](docs/seo-phase-1.md). Site Insights retains its exact English
+`/aboutMe/` path scope; Chinese-path traffic is not included in that snapshot.

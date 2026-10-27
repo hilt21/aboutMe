@@ -1,0 +1,528 @@
+{
+  "browser": "156.0.8078.48",
+  "evidence": [
+    {
+      "prefix": "en-320x568",
+      "baseline": {
+        "lang": "en",
+        "viewport": {
+          "width": 320,
+          "height": 568
+        },
+        "overflow": false,
+        "hero": {
+          "x": 17,
+          "y": 0,
+          "width": 286,
+          "height": 187.265625,
+          "bottom": 187.265625
+        },
+        "knorr": {
+          "x": 35,
+          "y": 317.25,
+          "width": 268,
+          "height": 18.890625,
+          "bottom": 336.140625
+        },
+        "dock": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 244.265625,
+          "bottom": 244.265625
+        },
+        "thesis": "Bringing railway braking and systems integration experience into verifiable AI engineering practice."
+      },
+      "current": {
+        "lang": "en",
+        "viewport": {
+          "width": 320,
+          "height": 568
+        },
+        "overflow": false,
+        "hero": {
+          "x": 17,
+          "y": 0,
+          "width": 286,
+          "height": 187.265625,
+          "bottom": 187.265625
+        },
+        "knorr": {
+          "x": 35,
+          "y": 317.25,
+          "width": 268,
+          "height": 18.890625,
+          "bottom": 336.140625
+        },
+        "dock": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 244.265625,
+          "bottom": 244.265625
+        },
+        "thesis": "Bringing railway braking and systems integration experience into verifiable AI engineering practice."
+      },
+      "errors": [],
+      "failed": []
+    },
+    {
+      "prefix": "zh-320x568",
+      "baseline": {
+        "lang": "zh-CN",
+        "viewport": {
+          "width": 320,
+          "height": 568
+        },
+        "overflow": false,
+        "hero": {
+          "x": 17,
+          "y": 0,
+          "width": 286,
+          "height": 173.765625,
+          "bottom": 173.765625
+        },
+        "knorr": {
+          "x": 35,
+          "y": 320.53125,
+          "width": 268,
+          "height": 18.890625,
+          "bottom": 339.421875
+        },
+        "dock": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 230.765625,
+          "bottom": 230.765625
+        },
+        "thesis": "把铁路制动与系统集成经验，带入可验证的 AI 工程实践。"
+      },
+      "current": {
+        "lang": "zh-CN",
+        "viewport": {
+          "width": 320,
+          "height": 568
+        },
+        "overflow": false,
+        "hero": {
+          "x": 17,
+          "y": 0,
+          "width": 286,
+          "height": 173.765625,
+          "bottom": 173.765625
+        },
+        "knorr": {
+          "x": 35,
+          "y": 320.53125,
+          "width": 268,
+          "height": 18.890625,
+          "bottom": 339.421875
+        },
+        "dock": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 230.765625,
+          "bottom": 230.765625
+        },
+        "thesis": "把铁路制动与系统集成经验，带入可验证的 AI 工程实践。"
+      },
+      "errors": [],
+      "failed": []
+    },
+    {
+      "prefix": "en-390x844",
+      "baseline": {
+        "lang": "en",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "overflow": false,
+        "hero": {
+          "x": 20,
+          "y": 0,
+          "width": 350,
+          "height": 217.625,
+          "bottom": 217.625
+        },
+        "knorr": {
+          "x": 38,
+          "y": 378.15625,
+          "width": 332,
+          "height": 20.25,
+          "bottom": 398.40625
+        },
+        "dock": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 262.625,
+          "bottom": 262.625
+        },
+        "thesis": "Bringing railway braking and systems integration experience into verifiable AI engineering practice."
+      },
+      "current": {
+        "lang": "en",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "overflow": false,
+        "hero": {
+          "x": 20,
+          "y": 0,
+          "width": 350,
+          "height": 217.625,
+          "bottom": 217.625
+        },
+        "knorr": {
+          "x": 38,
+          "y": 378.15625,
+          "width": 332,
+          "height": 20.25,
+          "bottom": 398.40625
+        },
+        "dock": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 262.625,
+          "bottom": 262.625
+        },
+        "thesis": "Bringing railway braking and systems integration experience into verifiable AI engineering practice."
+      },
+      "errors": [],
+      "failed": []
+    },
+    {
+      "prefix": "zh-390x844",
+      "baseline": {
+        "lang": "zh-CN",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "overflow": false,
+        "hero": {
+          "x": 20,
+          "y": 0,
+          "width": 350,
+          "height": 188.734375,
+          "bottom": 188.734375
+        },
+        "knorr": {
+          "x": 38,
+          "y": 349.265625,
+          "width": 332,
+          "height": 20.25,
+          "bottom": 369.515625
+        },
+        "dock": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 233.734375,
+          "bottom": 233.734375
+        },
+        "thesis": "把铁路制动与系统集成经验，带入可验证的 AI 工程实践。"
+      },
+      "current": {
+        "lang": "zh-CN",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "overflow": false,
+        "hero": {
+          "x": 20,
+          "y": 0,
+          "width": 350,
+          "height": 188.734375,
+          "bottom": 188.734375
+        },
+        "knorr": {
+          "x": 38,
+          "y": 349.265625,
+          "width": 332,
+          "height": 20.25,
+          "bottom": 369.515625
+        },
+        "dock": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 233.734375,
+          "bottom": 233.734375
+        },
+        "thesis": "把铁路制动与系统集成经验，带入可验证的 AI 工程实践。"
+      },
+      "errors": [],
+      "failed": []
+    },
+    {
+      "prefix": "en-1440x900",
+      "baseline": {
+        "lang": "en",
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "overflow": false,
+        "hero": {
+          "x": 190,
+          "y": 0,
+          "width": 1060,
+          "height": 206.265625,
+          "bottom": 206.265625
+        },
+        "knorr": {
+          "x": 190,
+          "y": 498.765625,
+          "width": 325.328125,
+          "height": 22.390625,
+          "bottom": 521.15625
+        },
+        "dock": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 274.265625,
+          "bottom": 274.265625
+        },
+        "thesis": "Bringing railway braking and systems integration experience into verifiable AI engineering practice."
+      },
+      "current": {
+        "lang": "en",
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "overflow": false,
+        "hero": {
+          "x": 190,
+          "y": 0,
+          "width": 1060,
+          "height": 206.265625,
+          "bottom": 206.265625
+        },
+        "knorr": {
+          "x": 190,
+          "y": 498.765625,
+          "width": 325.328125,
+          "height": 22.390625,
+          "bottom": 521.15625
+        },
+        "dock": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 274.265625,
+          "bottom": 274.265625
+        },
+        "thesis": "Bringing railway braking and systems integration experience into verifiable AI engineering practice."
+      },
+      "errors": [],
+      "failed": []
+    },
+    {
+      "prefix": "zh-1440x900",
+      "baseline": {
+        "lang": "zh-CN",
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "overflow": false,
+        "hero": {
+          "x": 190,
+          "y": 0,
+          "width": 1060,
+          "height": 188.875,
+          "bottom": 188.875
+        },
+        "knorr": {
+          "x": 190,
+          "y": 446.375,
+          "width": 325.328125,
+          "height": 22.390625,
+          "bottom": 468.765625
+        },
+        "dock": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 256.875,
+          "bottom": 256.875
+        },
+        "thesis": "把铁路制动与系统集成经验，带入可验证的 AI 工程实践。"
+      },
+      "current": {
+        "lang": "zh-CN",
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "overflow": false,
+        "hero": {
+          "x": 190,
+          "y": 0,
+          "width": 1060,
+          "height": 188.875,
+          "bottom": 188.875
+        },
+        "knorr": {
+          "x": 190,
+          "y": 446.375,
+          "width": 325.328125,
+          "height": 22.390625,
+          "bottom": 468.765625
+        },
+        "dock": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 256.875,
+          "bottom": 256.875
+        },
+        "thesis": "把铁路制动与系统集成经验，带入可验证的 AI 工程实践。"
+      },
+      "errors": [],
+      "failed": []
+    },
+    {
+      "prefix": "en-568x320",
+      "baseline": {
+        "lang": "en",
+        "viewport": {
+          "width": 568,
+          "height": 320
+        },
+        "overflow": false,
+        "hero": {
+          "x": 20,
+          "y": 0,
+          "width": 528,
+          "height": 204.125,
+          "bottom": 204.125
+        },
+        "knorr": {
+          "x": 38,
+          "y": 364.65625,
+          "width": 510,
+          "height": 20.25,
+          "bottom": 384.90625
+        },
+        "dock": {
+          "x": 0,
+          "y": 0,
+          "width": 568,
+          "height": 249.125,
+          "bottom": 249.125
+        },
+        "thesis": "Bringing railway braking and systems integration experience into verifiable AI engineering practice."
+      },
+      "current": {
+        "lang": "en",
+        "viewport": {
+          "width": 568,
+          "height": 320
+        },
+        "overflow": false,
+        "hero": {
+          "x": 20,
+          "y": 0,
+          "width": 528,
+          "height": 204.125,
+          "bottom": 204.125
+        },
+        "knorr": {
+          "x": 38,
+          "y": 364.65625,
+          "width": 510,
+          "height": 20.25,
+          "bottom": 384.90625
+        },
+        "dock": {
+          "x": 0,
+          "y": 0,
+          "width": 568,
+          "height": 249.125,
+          "bottom": 249.125
+        },
+        "thesis": "Bringing railway braking and systems integration experience into verifiable AI engineering practice."
+      },
+      "errors": [],
+      "failed": []
+    },
+    {
+      "prefix": "zh-568x320",
+      "baseline": {
+        "lang": "zh-CN",
+        "viewport": {
+          "width": 568,
+          "height": 320
+        },
+        "overflow": false,
+        "hero": {
+          "x": 20,
+          "y": 0,
+          "width": 528,
+          "height": 188.734375,
+          "bottom": 188.734375
+        },
+        "knorr": {
+          "x": 38,
+          "y": 333,
+          "width": 510,
+          "height": 20.25,
+          "bottom": 353.25
+        },
+        "dock": {
+          "x": 0,
+          "y": 0,
+          "width": 568,
+          "height": 233.734375,
+          "bottom": 233.734375
+        },
+        "thesis": "把铁路制动与系统集成经验，带入可验证的 AI 工程实践。"
+      },
+      "current": {
+        "lang": "zh-CN",
+        "viewport": {
+          "width": 568,
+          "height": 320
+        },
+        "overflow": false,
+        "hero": {
+          "x": 20,
+          "y": 0,
+          "width": 528,
+          "height": 188.734375,
+          "bottom": 188.734375
+        },
+        "knorr": {
+          "x": 38,
+          "y": 333,
+          "width": 510,
+          "height": 20.25,
+          "bottom": 353.25
+        },
+        "dock": {
+          "x": 0,
+          "y": 0,
+          "width": 568,
+          "height": 233.734375,
+          "bottom": 233.734375
+        },
+        "thesis": "把铁路制动与系统集成经验，带入可验证的 AI 工程实践。"
+      },
+      "errors": [],
+      "failed": []
+    }
+  ],
+  "preferenceCases": 3,
+  "noJavaScriptCases": 2,
+  "blockedStorage": true
+}
