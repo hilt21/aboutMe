@@ -1,7 +1,7 @@
 ---
 import type { CalendarDay } from '../lib/activity-view';
-interface Props { days: CalendarDay[]; label: string; metric: string; }
-const { days, label, metric } = Astro.props;
+interface Props { days: CalendarDay[]; label: string; metric: string; locale?: 'en' | 'zh'; }
+const { days, label, metric, locale = 'en' } = Astro.props;
 const offset = new Date(days[0].date + 'T00:00:00Z').getUTCDay();
 const columns = Math.ceil((offset + days.length) / 7);
 let previousMonth = '';
@@ -24,5 +24,5 @@ const unknown = days.filter(day => day.value === null).length;
       {days.map(day => <span class:list={['activity-dot', day.value === null ? 'unknown level-0' : `level-${day.level}`]} title={`${day.date}: ${day.value === null ? 'Unknown / 未知' : day.value.toLocaleString('en-US') + ' ' + metric}`}></span>)}
     </div>
   </div>
-  <div class="activity-calendar-foot"><span>{days[0].date} – {days.at(-1)?.date}</span><div class="activity-dot-legend" aria-label="Activity intensity"><span data-en="Less" data-zh="少">Less</span>{[0,1,2,3,4].map(level => <i class={`level-${level}`}></i>)}<span data-en="More" data-zh="多">More</span>{unknown > 0 && <><i class="unknown level-0"></i><span data-en="Unknown" data-zh="未知">Unknown</span></>}</div></div>
+  <div class="activity-calendar-foot"><span>{days[0].date} – {days.at(-1)?.date}</span><div class="activity-dot-legend" aria-label="Activity intensity"><span>{locale === 'zh' ? "少" : "Less"}</span>{[0,1,2,3,4].map(level => <i class={`level-${level}`}></i>)}<span>{locale === 'zh' ? "多" : "More"}</span>{unknown > 0 && <><i class="unknown level-0"></i><span>{locale === 'zh' ? "未知" : "Unknown"}</span></>}</div></div>
 </div>
