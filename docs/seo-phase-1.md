@@ -1,8 +1,10 @@
 # SEO phase 1: review and acceptance
 
-Checked 2026-10-27 (Asia/Shanghai). Base: current `origin/main`,
-`d660fd426b28c8d20f1519a4d3f9f209eb99566c`. Branch: `codex/seo-phase-1`.
-This is a PR-only implementation. Production has not been merged or deployed.
+Checked 2026-10-27 (Asia/Shanghai). Initial baseline: `origin/main`
+`d660fd426b28c8d20f1519a4d3f9f209eb99566c`. Before handoff, integrated current main
+`6df7254c2b396aadd6fdfa648d0942ed35d7ad76`, retaining its separately added Google
+verification file and refreshed data. Branch: `codex/seo-phase-1`.
+This SEO implementation is PR-only; it has not been merged into main or deployed.
 
 ## Baseline and resulting contract
 
@@ -98,29 +100,30 @@ If a host-root robots file is later managed by the host-root site's owner, it ma
 advertise `Sitemap: https://hilt21.github.io/aboutMe/sitemap.xml`, while retaining
 rules required by other projects on this shared host. That change is outside this PR.
 
-The existing signed-in Search Console session explicitly showed **no access** to
-`https://hilt21.github.io/aboutMe/`. This proves lack of access for that session,
-not that no other account has verified the property. No property, verification,
-permissions, sitemap submission, or indexing request was changed.
+At the initial baseline the signed-in Search Console session had no access.
+During implementation, main gained a Google HTML verification file independently
+(commit `91be2ef`). The final recheck now shows **verified owner** for the exact
+URL-prefix resource `https://hilt21.github.io/aboutMe/`, and its Sitemaps table
+contains **0 submitted sitemaps**. The overview says its data is being processed.
+The file was brought into this branch unchanged. This task did not create or
+change Search Console ownership or permissions. No sitemap/indexing request was
+submitted because this PR's sitemap and Chinese page are not deployed yet.
 
-Owner actions, after approving and deploying this PR:
+Owner actions after approving and deploying this PR:
 
-1. Use an account with access, ask an existing owner for access, or add the exact
-   **URL-prefix** property `https://hilt21.github.io/aboutMe/`. Do not try to verify
-   ownership of the shared `github.io` domain.
-2. If verification is needed, choose an available HTML tag or HTML file method.
-   Use only Google's actual supplied token/file; add it in a separately reviewed
-   change and deploy through GitHub Actions. An HTML tag belongs in the shared
-   page head; an HTML verification file belongs in `public/` at the exact filename
-   Google requests. Retain the tag/file after successful verification.
-   Acceptance: Google's expected verification URL/content is publicly reachable
-   without authentication and Search Console shows verified ownership.
-3. Confirm both public language URLs and `/aboutMe/sitemap.xml` return HTTP 200,
+1. Retain the existing Google verification file in `public/` and its corresponding
+   public URL under `/aboutMe/`. The final build was checked to preserve it byte
+   for byte. Search Console already shows verified ownership; no new token or
+   domain-level verification is needed. If access is later lost, use an account
+   with access or the available HTML verification method for this exact URL-prefix
+   property. Do not try to verify ownership of the shared `github.io` domain.
+2. Confirm both public language URLs and `/aboutMe/sitemap.xml` return HTTP 200,
    the XML contains only the two intended canonical URLs, and no production
-   header or HTML directive blocks indexing. Then submit the full sitemap URL
-   in Sitemaps. Acceptance: submission is recorded and later reports Success,
-   with two discovered URLs; retain the submission/result date.
-4. Inspect each canonical URL. Run the live URL test, verify the rendered language
+   header or HTML directive blocks indexing. In the resource's Sitemaps page,
+   enter `sitemap.xml` in the field after the displayed `/aboutMe/` prefix and
+   submit. Acceptance: submission is recorded and later reports Success, with
+   two discovered URLs; retain the submission/result date.
+3. Inspect each canonical URL. Run the live URL test, verify the rendered language
    and user-declared canonical, and request indexing if the account allows it.
    Acceptance: live test allows crawling/indexing and the request is recorded.
    Monitor Google's selected canonical and eventual indexing separately.
@@ -131,7 +134,7 @@ indexing, ranking, or citation by an AI answer engine. No ranking deadline is pr
 ## Residual limits before approval
 
 - No production deployment or post-deploy crawl has occurred. Merge/deploy needs user approval.
-- Search Console access, verification, submission and indexing remain pending owner action.
+- Search Console ownership is verified; sitemap submission and indexing requests wait for the approved deployment.
 - Physical mobile/Safari QA remains pending; mobile Chrome viewport evidence is provided.
 - Existing Site Insights collects only exact `/aboutMe/`. It is shown on both pages,
   but new `/aboutMe/zh/` traffic will not enter that snapshot. The original English
