@@ -36,3 +36,33 @@ Local installation: `~/Library/LaunchAgents/dev.hilt21.aboutme-codex-sync.plist`
 Disable with `launchctl bootout gui/$(id -u) ~/Library/LaunchAgents/dev.hilt21.aboutme-codex-sync.plist`.
 The dedicated checkout and state directory are separate from the development
 checkout. Node dependencies are installed from the repository lockfile.
+
+## Operational logs and publication status
+
+New log lines are JSON with `time_beijing` (explicit +08:00), `run_id`, `stage`,
+`event`, `scheduled_day`, attempt number and `retry_result`. Command failures log
+only a safe stage, exit code and failure category, never command stderr or
+credentials. The final retry result is `succeeded`, `failed`, `pending` (first
+failure awaiting retry), or `not_needed`. Concurrent-lock skips have a timestamp
+and lock stage but cannot safely read the other process's state.
+
+`published_this_run` means this invocation successfully pushed a snapshot.
+`publication_day` is a Beijing civil date, distinct from the 21:00 schedule day.
+`published_today` is cumulative for this local sync task on that civil day:
+true means a snapshot push is known, false means no push recorded since a known
+new-day boundary, and null means unknown. An unchanged repeat can therefore log
+`published_this_run:false, published_today:true`. These fields describe GitHub
+submission, not Pages completion; continue checking Actions for deployment status.
+
+Before pushing, the task atomically records the pending snapshot commit locally.
+If push times out, the next fetch checks whether origin/main contains that exact
+commit. Confirmation logs `previous_push_confirmed_remote` and preserves the day
+publication flag without falsely claiming a second push. A cross-midnight timeout
+cannot establish which civil day accepted the push and stays unknown unless an
+actual current-day push is known. Pending snapshot-only retry and all existing
+dirty-check/validation/publication safeguards remain in place.
+
+Legacy `published:true` can establish a same-day publication. Legacy false cannot
+establish absence of a prior push, so it migrates to null. Old logs are retained
+unchanged; missing historical timestamps are not reconstructed. State and pending
+commit metadata remain local and use the existing atomic state file.
