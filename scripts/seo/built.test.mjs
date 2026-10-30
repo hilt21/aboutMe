@@ -6,6 +6,15 @@ import {validatePage,builtSite,elements,attr} from './validate.mjs';
 const config=builtSite();
 const pages={en:readFileSync(path.join(config.dist,'index.html'),'utf8'),zh:readFileSync(path.join(config.dist,'zh/index.html'),'utf8')};
 for(const locale of ['en','zh'])test(`${locale}: static HTML, metadata, profile schema, crawlable links and assets`,()=>validatePage(pages[locale],{...config,locale}));
+for(const locale of ['en','zh'])test(`${locale}: one train remains outside the scrolling identity in the shared page shell`,()=>{
+  const nodes=elements(pages[locale]);
+  const trains=nodes.filter(n=>attr(n,'data-train-divider')!==undefined);
+  assert.equal(trains.length,1,'scrolling must not duplicate or hand off to another train');
+  const dock=trains[0].parentNode;
+  assert.equal(attr(dock,'class'),'train-dock');
+  assert.equal(attr(dock.parentNode,'class'),'page-shell','the sticky train must not be bounded by the short identity');
+  assert.ok(dock.childNodes.some(n=>n.tagName==='nav'),'navigation shares the same rail');
+});
 for(const locale of ['en','zh'])test(`${locale}: practice metrics and both calendars are available without opening a disclosure`,()=>{
   const nodes=elements(pages[locale]);
   for(const panelId of ['codex-panel','github-panel']){

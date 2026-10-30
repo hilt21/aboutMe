@@ -6,9 +6,13 @@ Baseline: `90876e6` on `origin/main`.
 ## Scope
 
 - Keep the existing bilingual identity, career, responsibilities and interests.
-- Let the full identity and signature train scroll with the document.
+- Let the full identity scroll with the document. Keep the same animated train
+  on its rail; the rail sticks 64px below the viewport top and releases along
+  the same path when scrolling back up.
 - Add a plain link to `https://hilt21.github.io/#projects` in the identity area.
-- Show a compact navigation only after the identity has left the viewport.
+- Fade the compact navigation in below the rail when it sticks, and out when
+  it releases. Native sticky positioning controls the train, without cloning,
+  changing its horizontal position or restarting its animation.
 - Keep project, practice and contact actions available in the compact navigation.
 - Remove duplicate project cards from this local preview. Keep existing project
   data and synchronization unchanged pending whole-page acceptance.
@@ -22,7 +26,8 @@ Baseline: `90876e6` on `origin/main`.
 - English and Chinese at 320x568, 390x844 and 1440x900: project/practice links,
   train and all default Knorr content fit in the initial viewport.
 - No document-level horizontal overflow; compact navigation is at most 56px
-  tall, stays within the viewport, and does not cover anchor destinations.
+  tall. Pinned rail is at 64px, navigation occupies 65-121px, and fragment
+  targets clear the combined area by using a 140px top offset.
 - The identity keeps its document height when the navigation appears; no
   replacement spacer or scroll-driven layout shift is introduced.
 - Native links, language switching, browser back, career disclosures and data
@@ -46,7 +51,7 @@ Browser evidence and results are kept in the ignored `qa/` directory.
 Physical phone, Safari and real-user acceptance remain outside local browser
 viewport simulation. This preview does not claim those checks have passed.
 
-## Verification: 2026-10-30
+## Original slice verification: 2026-10-30
 
 - `npm run check`: 46 files, zero errors/warnings; snapshot validators passed.
 - `npm test`: 38 passed. Build and built HTML/SEO tests: 10 passed.
@@ -74,3 +79,28 @@ viewport simulation. This preview does not claim those checks have passed.
 - Normal script/animation settings restored. Browser warning/error log empty.
 
 This is local implementation evidence, not production or human acceptance.
+
+## Persistent train follow-up
+
+The user requires the train animation to stay visible throughout scrolling.
+The original slice's description of a disappearing train and a topmost 56px
+navigation is superseded by the continuous sticky rail above the navigation.
+One existing renderer and animation instance is retained; only document
+placement, sticky positioning and navigation state are changed. No career,
+project-index or activity data is changed.
+
+Current browser evidence is in `qa/train-sticky/`. Verify both directions with
+`railTop = max(initialRailTop - scrollY, 64)`, stable document height, a single
+canvas, monotonically increasing train time, initial Knorr visibility and
+fragment targets below 121px. Physical phone and Safari remain untested.
+
+Follow-up verification passed: EN/ZH at 320x568, 390x844 and 1440x900 retain
+their original Knorr first-screen bounds. Mobile rail positions measured
+349.625px at scroll 0, 64px at scroll 371.5 and 1114.5, then 71.125px at scroll
+278.5 on return. Document height stayed 2831px, canvas count stayed one, and
+train time increased from 12.52 through 18.40, 35.42 and 42.23 seconds.
+Desktop returned from railTop64 to its original 301.492px at scroll0, and
+repinned at64 without resetting the renderer. Practice starts at139.867px,
+below navigation bottom121px. All 38 unit tests and 12 built/SEO tests pass.
+Independent review found no remaining actionable issues after correcting the
+exact intersection boundary on reverse scrolling. No merge or publication.
