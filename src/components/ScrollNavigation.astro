@@ -1,0 +1,33 @@
+---
+interface Props { locale: 'en' | 'zh'; email: string; }
+const { locale, email } = Astro.props;
+---
+<nav class="scroll-navigation" aria-label={locale==='zh'?'快捷导航':'Quick navigation'} hidden inert>
+  <div class="scroll-navigation-inner">
+    <a class="compact-brand" href="#about" aria-label={locale==='zh'?'Lu Tao · 返回身份区':'Lu Tao · Back to profile'}>Lu Tao</a>
+    <div class="scroll-navigation-links">
+      <a href="https://hilt21.github.io/#projects" aria-label={locale==='zh'?'项目索引':'Project Atlas · Chinese'}>{locale==='zh'?'项目索引':'Projects'}<span aria-hidden="true">→</span></a>
+      <a href="#activity">{locale==='zh'?'实践':'Practice'}</a>
+      <a href={`mailto:${email}`}>{locale==='zh'?'联系':'Email'}</a>
+    </div>
+  </div>
+</nav>
+<script>
+  const navigation = document.querySelector<HTMLElement>('.scroll-navigation');
+  const identity = document.querySelector<HTMLElement>('.profile-dock');
+  if (navigation && identity) {
+    let pastIdentity = false;
+    const update = () => {
+      // Keep a focused navigation available when the user scrolls back up.
+      const visible = pastIdentity || navigation.contains(document.activeElement);
+      navigation.hidden = !visible;
+      navigation.inert = !visible;
+    };
+    const observer = new IntersectionObserver(([entry]) => {
+      pastIdentity = entry.boundingClientRect.bottom <= 0;
+      update();
+    });
+    observer.observe(identity);
+    navigation.addEventListener('focusout', () => queueMicrotask(update));
+  }
+</script>

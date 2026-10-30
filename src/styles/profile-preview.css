@@ -1,0 +1,87 @@
+/* Bounded preview: a scrolling profile and a compact navigation after it. */
+html { scroll-padding-top: 76px; }
+.profile-page .profile-dock { position: relative; box-shadow: none; }
+.profile-page .dock-inner { max-width: none; padding: 0; }
+.profile-page .profile-dock .hero { padding-top: 30px; }
+.profile-page .profile-heading { grid-template-rows: auto auto auto; row-gap: 10px; }
+.profile-page .profile-thesis { font-size: 14px; line-height: 1.5; max-width: 510px; }
+.profile-page .experience-summary { grid-row: 1 / span 3; }
+.profile-page .language-toggle { min-width: 44px; min-height: 44px; display: inline-flex; align-items: center; justify-content: flex-end; font-size: 12px; }
+.profile-actions { grid-column: 1; grid-row: 3; display: flex; align-items: center; gap: 22px; scroll-margin-top: 12px; }
+.profile-actions a { min-height: 44px; display: inline-flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 500; }
+.project-index-link { background: var(--ink); color: var(--bg); padding: 0 16px; border-radius: 3px; }
+.project-index-link:hover { background: var(--accent); }
+.project-index-link small { font-size: 11px; opacity: .8; }
+.practice-link { text-decoration: underline; text-underline-offset: 5px; }
+.profile-page .profile-bottom { margin-top: 10px; }
+.profile-page .profile-location { font-size: 12px; }
+.profile-page .profile-contacts { font-size: 13px; }
+.profile-page .profile-contacts a { min-height: 44px; min-width: 44px; }
+.profile-page .profile-dock .train-divider { margin-top: 44px; margin-bottom: 0; }
+.profile-page .background-section { padding-top: 30px; }
+.scroll-navigation { position: fixed; inset: 0 0 auto; z-index: 20; background: var(--bg); border-bottom: 1px solid var(--line); }
+.scroll-navigation[hidden] { display: none; }
+.scroll-navigation-inner { width: 100%; max-width: 1160px; padding: 0 48px; margin: auto; min-height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.scroll-navigation a { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; font-size: 13px; gap: 8px; }
+.scroll-navigation .compact-brand { font-size: 17px; font-weight: 600; letter-spacing: -.5px; }
+.scroll-navigation-links { display: flex; align-items: center; gap: 24px; }
+.scroll-navigation a:hover { color: var(--accent); }
+@media (min-width: 1350px) {
+  .scroll-navigation-inner { max-width: 1200px; padding-inline: 70px; }
+}
+@media (max-width: 900px) {
+  .scroll-navigation-inner { padding-inline: 30px; }
+}
+@media (max-width: 640px) {
+  .profile-page .profile-dock .hero { padding-top: 20px; }
+  .profile-page .profile-heading { gap: 8px; }
+  .profile-page .profile-avatar { width: 54px; height: 54px; }
+  .profile-page .identity-line h1 { font-size: 24px; }
+  .profile-page .professional-role { font-size: 13px; }
+  .profile-page .focus-line { font-size: 12px; }
+  .profile-page .profile-thesis { font-size: 14px; line-height: 1.45; margin-top: 0; }
+  .profile-page .experience-summary { grid-row: 3; }
+  .profile-page .experience-label { font-size: 12px; }
+  .profile-actions { grid-row: 4; gap: 22px; }
+  .profile-page .profile-bottom { flex-wrap: wrap; gap: 0 12px; margin-top: 4px; }
+  .profile-page .profile-location { font-size: 12px; }
+  .profile-page .profile-contacts { gap: 14px; font-size: 12px; }
+  .profile-page .profile-contacts a { gap: 4px; }
+  .profile-page .profile-dock .train-divider { margin-top: 39px; }
+  .profile-page .background-section { padding-top: 20px; }
+  .profile-page .background-bio { order: 3; font-size: 14px; line-height: 1.6; margin-top: 20px; }
+  .profile-page .career-track { order: 2; margin-top: 12px; }
+  .profile-page .curiosity-track { order: 4; }
+  .profile-page .career-track .track-heading { font-size: 10px; }
+  .profile-page .career-nodes p { font-size: 13px; }
+  .profile-page .career-detail summary { font-size: 12px; min-height: 44px; }
+  .profile-page .career-detail p { font-size: 13px; }
+  .scroll-navigation-inner { min-height: 56px; padding-inline: 20px; gap: 10px; }
+  .scroll-navigation-links { gap: 10px; }
+  .scroll-navigation a { font-size: 12px; gap: 4px; }
+  .scroll-navigation .compact-brand { font-size: 15px; }
+}
+@media (max-width: 360px) {
+  .profile-page .profile-dock .hero { padding-top: 14px; }
+  .profile-page .profile-avatar { width: 48px; height: 48px; }
+  .profile-page .profile-heading { gap: 4px; }
+  .profile-page .identity-line h1 { font-size: 22px; }
+  .profile-page .professional-role { font-size: 13px; }
+  .profile-page .focus-line { font-size: 12px; }
+  .profile-page .profile-thesis { font-size: 14px; }
+  .profile-page .experience-label { font-size: 12px; }
+  .profile-page .profile-bottom { display: block; }
+  .profile-page .profile-contacts { justify-content: flex-start; gap: 22px; }
+  .profile-page .profile-dock .train-divider { margin-top: 32px; }
+  .profile-page .background-section { padding-top: 12px; }
+  .profile-page .career-track { margin-top: 8px; }
+  .profile-page .career-nodes h4 { font-size: 15px; }
+  .scroll-navigation-inner { padding-inline: 17px; gap: 6px; }
+  .scroll-navigation-links { gap: 6px; }
+}
+@media (max-height: 550px) and (orientation: landscape) {
+  .profile-page .profile-dock .hero { padding-top: 16px; }
+  .profile-page .profile-thesis { font-size: 12px; }
+  .profile-page .profile-heading { row-gap: 4px; }
+  .profile-page .profile-dock .train-divider { margin-top: 35px; }
+}

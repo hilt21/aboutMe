@@ -2,10 +2,31 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync,existsSync} from 'node:fs';
 import path from 'node:path';
-import {validatePage,builtSite} from './validate.mjs';
+import {validatePage,builtSite,elements,attr} from './validate.mjs';
 const config=builtSite();
 const pages={en:readFileSync(path.join(config.dist,'index.html'),'utf8'),zh:readFileSync(path.join(config.dist,'zh/index.html'),'utf8')};
 for(const locale of ['en','zh'])test(`${locale}: static HTML, metadata, profile schema, crawlable links and assets`,()=>validatePage(pages[locale],{...config,locale}));
+for(const locale of ['en','zh'])test(`${locale}: practice metrics and both calendars are available without opening a disclosure`,()=>{
+  const nodes=elements(pages[locale]);
+  for(const panelId of ['codex-panel','github-panel']){
+    const panel=nodes.find(n=>attr(n,'id')===panelId);
+    assert.ok(panel,`${panelId} exists`);
+    const descendants=nodes.filter(n=>{
+      for(let parent=n.parentNode;parent;parent=parent.parentNode)if(parent===panel)return true;
+      return false;
+    });
+    for(const cls of ['activity-metrics','activity-calendar']){
+      const content=descendants.find(n=>(attr(n,'class')??'').split(' ').includes(cls));
+      assert.ok(content,`${panelId} includes ${cls}`);
+      for(let ancestor=content;ancestor;ancestor=ancestor.parentNode){
+        assert.notEqual(ancestor.tagName,'details','practice content must not require expansion');
+        assert.equal(attr(ancestor,'hidden'),undefined,'practice content stays visible');
+      }
+      assert.ok(content.childNodes.length>0);
+    }
+    assert.ok(descendants.some(n=>attr(n,'role')==='img'&&attr(n,'aria-label')?.startsWith(panelId==='codex-panel'?'Codex Token calendar':'GitHub contribution calendar')),'calendar has an accessible summary');
+  }
+});
 test('sitemap contains exactly the two canonical static URLs',()=>{
   const xml=readFileSync(path.join(config.dist,'sitemap.xml'),'utf8');
   assert.match(xml,/^<\?xml version="1.0" encoding="UTF-8"\?>/);
