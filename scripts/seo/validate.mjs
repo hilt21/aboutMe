@@ -39,7 +39,9 @@ export function validatePage(html, {locale,urls,profile,dist,base}) {
   const thesis=nodes.find(n => attr(n,'class') === 'profile-thesis');
   assert.match(text(thesis),locale === 'zh' ? /把铁路制动与系统集成经验/ : /Bringing railway braking/);
   assert.match(text(nodes.find(n => attr(n,'id') === 'background')),locale === 'zh' ? /牵头地铁、高速列车/ : /Lead bogie equipment/);
-  for (const project of profile.projects) assert.ok(html.includes(locale === 'zh' ? project.zh : project.description.replaceAll('&','&amp;')) || text(one('main')).includes(locale === 'zh' ? project.zh : project.description));
+  const projects=nodes.filter(n => n.tagName === 'a' && attr(n,'href') === 'https://hilt21.github.io/#projects');
+  assert.equal(projects.length,2,'profile and compact navigation link to the project index');
+  assert.ok(!nodes.some(n => (attr(n,'class')??'').split(' ').includes('project-card')),'project cards live in Project Atlas');
   const schema=JSON.parse(text(one('script','type','application/ld+json')));
   assert.equal(schema['@context'],'https://schema.org');
   assert.equal(schema['@type'],'ProfilePage');

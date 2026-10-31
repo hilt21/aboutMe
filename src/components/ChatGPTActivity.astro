@@ -26,7 +26,7 @@ const stale = !data.last_synced_at || Date.now()-Date.parse(data.last_synced_at)
   <div class="activity-metrics">
     {metrics.map(([key,en,zh]) => <div><span>{locale === 'zh' ? zh : en}</span><strong title={data.summary[key]?.toLocaleString('en-US')??'Unknown / 未知'}>{key==='lifetimeTokens'||key==='peakDailyTokens'?formatTokenBillions(data.summary[key]):data.summary[key]?.toLocaleString('en-US')??'—'}</strong></div>)}
   </div>
-  <ActivityCalendar locale={locale} days={days} label="Codex Token calendar · last 183 days" metric="tokens" />
+  <ActivityCalendar locale={locale} days={days} label={locale==='zh'?'Codex Token 日历 · 最近 183 天':'Codex Token calendar · last 183 days'} metric="tokens" />
   <details class="activity-info"><summary>{locale === 'zh' ? "数据说明" : "Data details"}</summary>
     <p>{locale === 'zh' ? `${183-missing}/183 天有观测 · ${missing} 天未知。未知不代表零活动。来源划日时区未验证。` : `${183-missing}/183 dates observed · ${missing} unknown. Unknown is not zero. Source daily time zone is unverified.`}</p>
     <p>{locale === 'zh' ? "热力图展示最近 183 天，展示窗口截至上海时区今天。汇总指标保留原统计范围，不统计普通 Chat 对话。个人资料与网页分析可能异步更新。" : "Calendar: last 183 days, ending on today's Asia/Shanghai date. Summary metrics keep their original periods. Ordinary Chat conversations are not measured here. Profile and web analytics may update at different times."}</p>

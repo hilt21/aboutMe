@@ -1,0 +1,40 @@
+{
+  "captureDate": "2026-10-30",
+  "timeZone": "Asia/Shanghai",
+  "acceptedDate": "2026-10-31",
+  "method": "Chromium in-app browser viewport simulation",
+  "physicalPhoneTested": false,
+  "safariTested": false,
+  "images": [
+    {
+      "file": "before-desktop-work.png",
+      "sha256": "19f732b994d62ef6bdcf0c04d3372dfcbee6072a48994099a884b6c3cc793ec5",
+      "bytes": 53565
+    },
+    {
+      "file": "desktop-top.png",
+      "sha256": "b16673431460b9eecaa8bf60101e917478ec18911b684cc3409901c4a17acabf",
+      "bytes": 55367
+    },
+    {
+      "file": "desktop-practice.png",
+      "sha256": "346e368bc98fa14b9af035b3d375bdff96cdff14a7f6025cb4f46a58b4f2164e",
+      "bytes": 54940
+    },
+    {
+      "file": "mobile-320-en-top.png",
+      "sha256": "b62d5f8fa43ee3de221e8c1be709d807f30ed8081b3dc34a9df42c5bd9bbe3a6",
+      "bytes": 29440
+    },
+    {
+      "file": "mobile-390-zh-practice.png",
+      "sha256": "9b2bb14d0228a76a55b7d0025509cd35717ad683e9cfaa35017863557428cd26",
+      "bytes": 24570
+    },
+    {
+      "file": "mobile-390-zh-footer.png",
+      "sha256": "cb988757ada94b5dc9e237316b633a49e5a1758cca825ab3d00fa6ac45ff8aa8",
+      "bytes": 25331
+    }
+  ]
+}

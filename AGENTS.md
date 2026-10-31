@@ -2,7 +2,9 @@
 
 Read README.md and docs/weekly-maintenance.md before publishing updates.
 
-Preserve the approved fixed profile, train and bilingual career content. Knorr default content must remain visible without scrolling on tested 320×568 and larger portrait/desktop viewports. Short landscape uses a compact layout.
+Preserve the approved bilingual career content and single persistent train. When changing layout or scrolling, read docs/profile-preview.md. Knorr default content must remain visible without scrolling on tested 320×568 and larger portrait/desktop viewports. Short landscape uses a compact layout.
+
+Project presentation belongs in https://hilt21.github.io/#projects; keep the profile's index link and default-visible Codex/GitHub metrics and heatmaps.
 
 Only publish public, verified project evidence. Curated descriptions are distinct from automated metadata. Do not infer production readiness from commit activity. Do not add PR/release feeds.
 

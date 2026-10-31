@@ -1,0 +1,38 @@
+---
+interface Props { locale: 'en' | 'zh'; email: string; }
+const { locale, email } = Astro.props;
+---
+<nav class="scroll-navigation" aria-label={locale==='zh'?'快捷导航':'Quick navigation'} hidden inert>
+  <div class="scroll-navigation-inner">
+    <a class="compact-brand" href="#about" aria-label={locale==='zh'?'Lu Tao · 返回身份区':'Lu Tao · Back to profile'}>Lu Tao</a>
+    <div class="scroll-navigation-links">
+      <a href="https://hilt21.github.io/#projects" aria-label={locale==='zh'?'项目索引':'Project Atlas · Chinese'}>{locale==='zh'?'项目索引':'Projects'}<span aria-hidden="true">→</span></a>
+      <a href="#activity">{locale==='zh'?'实践':'Practice'}</a>
+      <a href={`mailto:${email}`}>{locale==='zh'?'联系':'Email'}</a>
+    </div>
+  </div>
+</nav>
+<script>
+  const navigation = document.querySelector<HTMLElement>('.scroll-navigation');
+  const dock = document.querySelector<HTMLElement>('.train-dock');
+  const sentinel = document.querySelector<HTMLElement>('.train-dock-sentinel');
+  if (navigation && dock && sentinel) {
+    const pinTop = parseFloat(getComputedStyle(dock).top);
+    let pinned = false;
+    const update = () => {
+      // Keep a focused navigation available when the user scrolls back up.
+      const visible = pinned || navigation.contains(document.activeElement);
+      dock.classList.toggle('is-pinned', pinned);
+      navigation.hidden = false;
+      navigation.classList.toggle('is-visible', visible);
+      navigation.inert = !visible;
+      navigation.setAttribute('aria-hidden', String(!visible));
+    };
+    const observer = new IntersectionObserver(([entry]) => {
+      pinned = !entry.isIntersecting && entry.boundingClientRect.bottom <= pinTop;
+      update();
+    }, {rootMargin: `-${pinTop}px 0px 0px 0px`});
+    observer.observe(sentinel);
+    navigation.addEventListener('focusout', () => queueMicrotask(update));
+  }
+</script>
