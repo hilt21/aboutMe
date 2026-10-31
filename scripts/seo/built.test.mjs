@@ -33,7 +33,8 @@ for(const locale of ['en','zh'])test(`${locale}: practice metrics and both calen
       }
       assert.ok(content.childNodes.length>0);
     }
-    assert.ok(descendants.some(n=>attr(n,'role')==='img'&&attr(n,'aria-label')?.startsWith(panelId==='codex-panel'?'Codex Token calendar':'GitHub contribution calendar')),'calendar has an accessible summary');
+    const calendarPrefix=locale==='zh'?(panelId==='codex-panel'?'Codex Token 日历':'GitHub 贡献日历'):(panelId==='codex-panel'?'Codex Token calendar':'GitHub contribution calendar');
+    assert.ok(descendants.some(n=>attr(n,'role')==='img'&&attr(n,'aria-label')?.startsWith(calendarPrefix)),'calendar has a localized accessible summary');
   }
 });
 test('sitemap contains exactly the two canonical static URLs',()=>{

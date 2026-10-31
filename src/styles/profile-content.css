@@ -1,0 +1,82 @@
+/* Continue the approved profile/train direction through the rest of the page. */
+.profile-page {
+  --body-copy-size: .875rem;
+  --support-copy-size: .75rem;
+}
+.profile-page .career-track .track-heading,
+.profile-page .curiosity-track .track-heading { font-size: var(--support-copy-size); letter-spacing: .04em; }
+.profile-page .track-nodes p { font-size: var(--body-copy-size); line-height: 1.7; }
+.profile-page .place-label { font-size: .8125rem; }
+.profile-page .node-caption { color: var(--muted); font-size: var(--support-copy-size); }
+.profile-page .ambassador-label { font-size: .625rem; line-height: 1.4; }
+.profile-page .career-detail summary { min-height: 44px; font-size: var(--support-copy-size); }
+.profile-page .career-detail p { font-size: var(--body-copy-size); line-height: 1.7; }
+.profile-page .curiosity-track { margin-top: 32px; padding-top: 28px; }
+.profile-page .curiosity-nodes h4 { font-size: 1.125rem; }
+.profile-page .interest-evidence { font-size: var(--support-copy-size); color: var(--muted); line-height: 1.6; overflow-wrap: anywhere; }
+.profile-page a.interest-evidence { min-height: 44px; text-decoration: underline; text-underline-offset: 4px; }
+.profile-page a.interest-evidence:hover { color: var(--accent); }
+.profile-page .activity { padding-block: 48px; }
+.profile-page .activity .eyebrow { font-size: .625rem; }
+.profile-page .activity .section-title { margin-bottom: 32px; }
+.profile-page .activity-panel { border-top: 1px solid var(--line); padding-top: 20px; }
+.profile-page .activity-panel-heading { min-height: 44px; }
+.profile-page .activity-panel-heading h3 { font-size: 1.1875rem; }
+.profile-page .activity-panel-heading a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; min-width: 44px; font-size: var(--support-copy-size); text-decoration: underline; text-underline-offset: 4px; }
+.profile-page .activity-metrics { min-height: 178px; gap: 24px 16px; }
+.profile-page .activity-metrics span { font-size: var(--support-copy-size); line-height: 1.5; }
+.profile-page .activity-metrics strong { font-size: 1.625rem; }
+.profile-page .activity-months { font-size: .625rem; }
+.profile-page .activity-weekdays { font-size: .5625rem; }
+.profile-page .activity-calendar-foot { font-size: .625rem; line-height: 1.6; gap: 10px; }
+.profile-page .activity-info { margin-top: 20px; font-size: var(--body-copy-size); line-height: 1.7; }
+.profile-page .activity-info summary { min-height: 44px; padding-block: 10px; font-size: var(--support-copy-size); }
+.profile-page .activity-table table { font-size: var(--support-copy-size); }
+.profile-page .activity-table caption { margin-bottom: 8px; }
+.profile-page .activity-provenance > div { margin-block: 5px; }
+.profile-page .activity-overdue { font-size: var(--support-copy-size); }
+.profile-page .closing { padding-block: 56px; }
+.profile-page .closing .eyebrow { font-size: .625rem; }
+.profile-page .closing h2 { font-size: clamp(2rem, 2rem + 1vw, 2.75rem); }
+.profile-page .closing .primary-link { min-height: 44px; font-size: var(--body-copy-size); }
+.profile-page .site-insights { padding-block: 24px; }
+.profile-page .site-insights-heading { flex-wrap: wrap; font-size: .6875rem; gap: 8px 16px; }
+.profile-page .site-insights-metric > span { font-size: var(--support-copy-size); }
+.profile-page .site-insights-trend span { font-size: .625rem; }
+.profile-page .site-insights-provenance { flex-wrap: wrap; font-size: .6875rem; line-height: 1.7; gap: 6px 16px; }
+.profile-page footer { display: grid; grid-template-columns: minmax(160px, 1fr) minmax(0, 2fr) 44px; gap: 20px; align-items: start; padding-block: 28px; font-size: var(--support-copy-size); }
+.profile-page footer > div:first-child > span { max-width: none; font-size: var(--support-copy-size); }
+.profile-page .provenance { min-width: 0; max-width: none; margin: 0; font-size: var(--support-copy-size); line-height: 1.8; overflow-wrap: anywhere; }
+.profile-page .provenance a { min-height: 44px; display: inline-flex; align-items: center; gap: 8px; text-decoration: underline; text-underline-offset: 4px; }
+.profile-page .provenance a > span:first-child { min-width: 0; }
+.profile-page .back-top { width: 44px; height: 44px; font-size: 1.125rem; }
+@media (min-width: 901px) and (max-width: 1100px) {
+  .profile-page .activity-metrics { min-height: 234px; }
+}
+@media (max-width: 900px) {
+  .profile-page .activity-metrics { min-height: 0; }
+}
+@media (min-width: 641px) and (min-height: 551px) and (max-height: 650px) {
+  .profile-page .profile-dock .hero { padding-top: 20px; }
+  .profile-page .profile-heading { row-gap: 6px; }
+  .profile-page .profile-bottom { margin-top: 4px; }
+  .train-dock-sentinel { margin-top: 35px; }
+  .profile-page .background-section { padding-top: 12px; }
+  .profile-page .career-track { margin-top: 8px; }
+  .profile-page .career-track .track-heading { margin-bottom: 8px; }
+}
+@media (max-width: 640px) {
+  .profile-page .career-track { margin-top: 6px; }
+  .profile-page .career-nodes p { line-height: 1.6; }
+  .profile-page .curiosity-track { margin-top: 28px; }
+  .profile-page .curiosity-nodes > li { padding-bottom: 28px; }
+  .profile-page .interest-evidence { margin-top: 8px; }
+  .profile-page .activity { padding-block: 36px; }
+  .profile-page .activity-grid { gap: 32px; }
+  .profile-page .activity-panel + .activity-panel { padding-top: 24px; }
+  .profile-page .closing { padding-block: 44px; }
+  .profile-page .site-insights { padding-block: 20px; }
+  .profile-page footer { grid-template-columns: minmax(0, 1fr) 44px; gap: 12px 20px; }
+  .profile-page .provenance { grid-column: 1 / -1; grid-row: 2; }
+  .profile-page .back-top { grid-column: 2; grid-row: 1; }
+}

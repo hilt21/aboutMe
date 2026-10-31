@@ -5,6 +5,7 @@ import '../styles/global.css';
 import '../styles/profile.css';
 import '../styles/activity.css';
 import '../styles/profile-preview.css';
+import '../styles/profile-content.css';
 import {Image} from 'astro:assets';
 import avatar from '../assets/lu-tao-avatar.webp';
 import profileRaw from '../data/profile.json';
@@ -29,7 +30,7 @@ const data=Snapshot.parse(raw),days=data.calendar;
 const activeDays=days.filter(d=>d.count>0).length;
 const activityEnd=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
 const githubDays=activityCalendar(days.map(day=>({date:day.date,value:day.count,level:day.level})),activityEnd);
-const updated=data.updatedAt?new Date(data.updatedAt).toLocaleDateString('en',{month:'short',day:'numeric',year:'numeric',timeZone:'Asia/Shanghai'}):'Awaiting first sync';
+const updated=data.updatedAt?new Date(data.updatedAt).toLocaleDateString(locale==='zh'?'zh-CN':'en',{month:'short',day:'numeric',year:'numeric',timeZone:'Asia/Shanghai'}):(locale==='zh'?'等待首次同步':'Awaiting first sync');
 const compactLabels:Record<string,{en:string;zh:string}>={mechanical:{en:'Mechanical Eng.',zh:'机械工程'},braking:{en:'Rail braking',zh:'铁路制动'},vibe:{en:'AI development',zh:'AI 辅助开发'}};
 ---
 <!doctype html><html lang={seo.language}><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="description" content={seo.description}/><meta name="theme-color" content="#f7f6f2"/><meta property="og:title" content={seo.title}/><meta property="og:description" content={seo.description}/><meta property="og:type" content="profile"/><meta property="og:url" content={urls[locale]}/><link rel="canonical" href={urls[locale]}/><link rel="alternate" hreflang="en" href={urls.en}/><link rel="alternate" hreflang="zh-CN" href={urls.zh}/><link rel="alternate" hreflang="x-default" href={urls.en}/><link rel="sitemap" type="application/xml" href={`${import.meta.env.BASE_URL.replace(/\/$/,'')}/sitemap.xml`}/><link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`}/><title>{seo.title}</title><script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData).replaceAll('<','\\u003c')}/>
@@ -51,18 +52,18 @@ const compactLabels:Record<string,{en:string;zh:string}>={mechanical:{en:'Mechan
 <div class="activity-grid">
 <ChatGPTActivity locale={locale} />
 <section class="activity-panel" id="github-panel" aria-labelledby="github-heading">
-  <div class="activity-panel-heading"><h3 id="github-heading">GitHub</h3><a href={profile.github} target="_blank" rel="noopener noreferrer" aria-label="View on GitHub">↗</a></div>
+  <div class="activity-panel-heading"><h3 id="github-heading">GitHub</h3><a href={profile.github} target="_blank" rel="noopener noreferrer">{locale==='zh'?'GitHub 主页':'View on GitHub'}<span aria-hidden="true">↗</span></a></div>
   <div class="activity-metrics">
     <div><span>{locale === 'zh' ? "贡献 · 过去一年" : "Contributions · last year"}</span><strong>{data.totalContributions??'—'}</strong></div>
     <div><span>{locale === 'zh' ? "活跃天数 · 过去一年" : "Active days · last year"}</span><strong>{activeDays||'—'}</strong></div>
     <div><span>{locale === 'zh' ? "公开仓库" : "Public repositories"}</span><strong>{data.repositories??'—'}</strong></div>
   </div>
-  <ActivityCalendar locale={locale} days={githubDays} label="GitHub contribution calendar · last 183 days" metric="contributions" />
+  <ActivityCalendar locale={locale} days={githubDays} label={locale==='zh'?'GitHub 贡献日历 · 最近 183 天':'GitHub contribution calendar · last 183 days'} metric="contributions" />
   <details class="activity-info"><summary>{locale === 'zh' ? "数据说明" : "Data details"}</summary><p>{locale === 'zh' ? "热力图展示最近 183 天。汇总数字保留原统计范围，并非半年总量。" : "Calendar: last 183 days. Summary metrics keep their original periods; they are not six-month totals."}</p><p>GitHub public · {data.updatedAt??'Unknown'}</p><p>{locale === 'zh' ? "缺失日期为未知，不代表零活动。" : "Missing dates are unknown, not zero."}</p><div class="activity-table"><table><caption>{locale === 'zh' ? "每日贡献 · 最近 183 天" : "Daily contributions · last 183 days"}</caption><thead><tr><th>Date / 日期</th><th>{locale === 'zh' ? "贡献" : "Contributions"}</th></tr></thead><tbody>{githubDays.map(day=><tr><th scope="row">{day.date}</th><td>{day.value===null?'—':day.value}</td></tr>)}</tbody></table></div></details>
 </section>
 </div></section>
-<section class="closing"><span class="eyebrow">ALWAYS A WORK IN PROGRESS</span><h2><span>{locale === 'zh' ? "更好的系统。" : "Better systems."}</span><br/><span class="serif">{locale === 'zh' ? "始于好奇。" : "Built with curiosity."}</span></h2><a href={profile.github} target="_blank" rel="noopener noreferrer" class="primary-link"><span>{locale === 'zh' ? "在 GitHub 找到我" : "Find me on GitHub"}</span>↗</a></section><SiteInsights locale={locale}/></main>
-<footer><div><a href="#" class="footer-brand">Lu Tao</a><span>{locale === 'zh' ? "工程 × AI × 人的判断" : "Engineering × AI × Human judgment"}</span></div><div class="provenance"><span><span class="live-dot"></span>GitHub snapshot · {updated}<span id="freshness" data-updated={data.updatedAt} data-status={data.status}></span></span><span>{locale === 'zh' ? "画像核对于 2026-10-12 · 仅展示公开资料" : "Profile reviewed Oct 12, 2026 · Public sources only"}</span><a href={profile.github} target="_blank" rel="noopener noreferrer">{locale === 'zh' ? "来源：GitHub 公开贡献与仓库 ↗" : "Source: GitHub public contributions & repositories ↗"}</a></div><a href="#" class="back-top" aria-label="Back to top">↑</a></footer></div>
+<section class="closing" id="contact"><span class="eyebrow">ALWAYS A WORK IN PROGRESS</span><h2><span>{locale === 'zh' ? "更好的系统。" : "Better systems."}</span><br/><span class="serif">{locale === 'zh' ? "始于好奇。" : "Built with curiosity."}</span></h2><a href={`mailto:${profile.email}`} class="primary-link"><span>{locale === 'zh' ? "联系交流" : "Get in touch"}</span><span aria-hidden="true">↗</span></a></section><SiteInsights locale={locale}/></main>
+<footer><div><a href="#" class="footer-brand">Lu Tao</a><span>{locale === 'zh' ? "工程 × AI × 人的判断" : "Engineering × AI × Human judgment"}</span></div><div class="provenance"><span><span class="live-dot"></span>{locale==='zh'?'GitHub 快照':'GitHub snapshot'} · {updated}<span id="freshness" data-updated={data.updatedAt} data-status={data.status}></span></span><span>{locale === 'zh' ? "画像核对于 2026-10-12 · 仅展示公开资料" : "Profile reviewed Oct 12, 2026 · Public sources only"}</span><a href={profile.github} target="_blank" rel="noopener noreferrer"><span>{locale === 'zh' ? "来源：GitHub 公开贡献与仓库" : "Source: GitHub public contributions & repositories"}</span><span aria-hidden="true">↗</span></a></div><a href="#" class="back-top" aria-label={locale==='zh'?'返回顶部':'Back to top'}>↑</a></footer></div>
 <script>
 import {experienceYears,profileYear} from '../lib/experience';
 function refreshExperience(){const year=profileYear();document.querySelectorAll<HTMLElement>('[data-experience-years]').forEach(el=>{el.textContent=`${experienceYears(Number(el.dataset.experienceYears),Number(el.dataset.baselineYear),year)}+`;});}

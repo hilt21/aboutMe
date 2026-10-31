@@ -1,6 +1,6 @@
 # Lu Tao · Engineering × AI
 
-A bilingual professional profile with mechanical engineering and railway braking experience, selected engineering/AI projects, a GitHub contribution calendar, and a miniature train.
+A bilingual professional profile with mechanical engineering and railway braking experience, a Project Atlas entry, visible Codex/GitHub practice calendars, and a continuously animated miniature train on a sticky rail.
 
 GitHub Pages target: https://hilt21.github.io/aboutMe/
 
@@ -14,10 +14,10 @@ Defaults: `SITE_URL=https://hilt21.github.io`, `PUBLIC_BASE_PATH=/aboutMe/`. Ove
 
 ## Data and maintenance
 
-- `src/data/profile.json`: curated projects, identity, contacts and calendar-year experience baseline.
+- `src/data/profile.json`: identity, contacts, calendar-year experience baseline and retained project records.
 - `src/components/Background.astro`: approved bilingual career and interests.
 - `src/data/github.json`: public contribution calendar, refreshed by `scripts/sync-github.mjs`.
-- `src/data/projects.json`: public metadata for curated repositories, refreshed by `scripts/sync-projects.mjs`.
+- `src/data/projects.json`: retained public repository metadata, refreshed by `scripts/sync-projects.mjs`; project cards are presented independently in [Project Atlas](https://hilt21.github.io/#projects).
 
 The ChatGPT curation task runs on Monday mornings in Asia/Shanghai, reviews public engineering/AI projects and commits verified updates. GitHub Actions refreshes contributions and selected-repository metadata on push/manual dispatch, then validates, builds and deploys. ChatGPT is the only recurring scheduler. Selection and maturity labels require public evidence. Failed collection keeps the last valid snapshot and makes the final report job fail after fallback deployment. Contributions older than ten days are flagged. PR/release activity is neither collected nor displayed.
 
@@ -25,7 +25,7 @@ Descriptions and maturity labels are curated. Stars and pushes do not prove depl
 
 ## Train and assets
 
-Three.js primitives, a transparent orthographic scene, ten-second cruise, scroll/pointer acceleration, visibility pausing and reduced-motion support. SVG is the fallback. Browser QA to date covers SVG fallback; GPU rendering remains to be checked on a WebGL-capable device.
+Three.js primitives, a transparent orthographic scene, ten-second cruise, scroll/pointer acceleration, visibility pausing and reduced-motion support. One train stays mounted while its rail sticks and releases; compact navigation appears below it. SVG is the fallback. Browser QA includes WebGL rendering in the in-app Chromium browser; physical-device rendering and Safari remain untested. See [interaction contract](docs/profile-preview.md) and [acceptance evidence](docs/profile-full-page.md).
 
 Font notices are retained in `public/fonts/licenses`. Astro and Three.js retain upstream licenses. The portrait is a user-approved asset and is not offered for reuse. This repository uses its optimized WebP; the original upload is not included.
 
