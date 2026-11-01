@@ -2,28 +2,22 @@
   "schemaVersion": 1,
   "source": "cloudflare-web-analytics",
   "status": "ok",
-  "updatedAt": "2026-10-31T13:00:44.698Z",
-  "lastAttemptAt": "2026-10-31T13:00:44.698Z",
+  "updatedAt": "2026-11-01T11:22:37.316Z",
+  "lastAttemptAt": "2026-11-01T11:22:37.316Z",
   "error": null,
   "host": "hilt21.github.io",
   "path": "/aboutMe/",
   "period": {
-    "from": "2026-10-01",
-    "to": "2026-10-30",
+    "from": "2026-10-02",
+    "to": "2026-10-31",
     "timeZone": "UTC"
   },
   "totals": {
-    "pageViews": 90,
-    "visits": 80
+    "pageViews": 117,
+    "visits": 93
   },
   "sampled": true,
   "daily": [
-    {
-      "date": "2026-10-01",
-      "pageViews": 0,
-      "visits": 0,
-      "sampleInterval": 1
-    },
     {
       "date": "2026-10-02",
       "pageViews": 0,
@@ -170,33 +164,39 @@
     },
     {
       "date": "2026-10-26",
-      "pageViews": 50,
-      "visits": 50,
-      "sampleInterval": 10
+      "pageViews": 55,
+      "visits": 52,
+      "sampleInterval": 1
     },
     {
       "date": "2026-10-27",
-      "pageViews": 0,
-      "visits": 0,
+      "pageViews": 12,
+      "visits": 11,
       "sampleInterval": 1
     },
     {
       "date": "2026-10-28",
-      "pageViews": 10,
-      "visits": 0,
-      "sampleInterval": 10
+      "pageViews": 6,
+      "visits": 2,
+      "sampleInterval": 1
     },
     {
       "date": "2026-10-29",
-      "pageViews": 10,
-      "visits": 10,
-      "sampleInterval": 10
+      "pageViews": 2,
+      "visits": 2,
+      "sampleInterval": 1
     },
     {
       "date": "2026-10-30",
-      "pageViews": 10,
-      "visits": 10,
-      "sampleInterval": 10
+      "pageViews": 9,
+      "visits": 3,
+      "sampleInterval": 1
+    },
+    {
+      "date": "2026-10-31",
+      "pageViews": 23,
+      "visits": 13,
+      "sampleInterval": 1
     }
   ]
 }
