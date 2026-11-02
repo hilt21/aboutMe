@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "source": "cloudflare-web-analytics",
   "status": "ok",
   "updatedAt": "2026-11-02T12:05:24.542Z",
@@ -13,190 +13,227 @@
     "timeZone": "UTC"
   },
   "totals": {
-    "pageViews": 143,
-    "visits": 116
+    "pageViews": 144,
+    "visits": 113
   },
-  "sampled": true,
+  "coverage": {
+    "from": "2026-10-24",
+    "expectedDays": 9,
+    "knownDays": 9,
+    "missingDays": 0,
+    "complete": true
+  },
+  "sampled": false,
   "daily": [
     {
       "date": "2026-10-03",
-      "pageViews": 0,
-      "visits": 0,
-      "sampleInterval": 1
+      "pageViews": null,
+      "visits": null,
+      "sampleInterval": null,
+      "state": "outside"
     },
     {
       "date": "2026-10-04",
-      "pageViews": 0,
-      "visits": 0,
-      "sampleInterval": 1
+      "pageViews": null,
+      "visits": null,
+      "sampleInterval": null,
+      "state": "outside"
     },
     {
       "date": "2026-10-05",
-      "pageViews": 0,
-      "visits": 0,
-      "sampleInterval": 1
+      "pageViews": null,
+      "visits": null,
+      "sampleInterval": null,
+      "state": "outside"
     },
     {
       "date": "2026-10-06",
-      "pageViews": 0,
-      "visits": 0,
-      "sampleInterval": 1
+      "pageViews": null,
+      "visits": null,
+      "sampleInterval": null,
+      "state": "outside"
     },
     {
       "date": "2026-10-07",
-      "pageViews": 0,
-      "visits": 0,
-      "sampleInterval": 1
+      "pageViews": null,
+      "visits": null,
+      "sampleInterval": null,
+      "state": "outside"
     },
     {
       "date": "2026-10-08",
-      "pageViews": 0,
-      "visits": 0,
-      "sampleInterval": 1
+      "pageViews": null,
+      "visits": null,
+      "sampleInterval": null,
+      "state": "outside"
     },
     {
       "date": "2026-10-09",
-      "pageViews": 0,
-      "visits": 0,
-      "sampleInterval": 1
+      "pageViews": null,
+      "visits": null,
+      "sampleInterval": null,
+      "state": "outside"
     },
     {
       "date": "2026-10-10",
-      "pageViews": 0,
-      "visits": 0,
-      "sampleInterval": 1
+      "pageViews": null,
+      "visits": null,
+      "sampleInterval": null,
+      "state": "outside"
     },
     {
       "date": "2026-10-11",
-      "pageViews": 0,
-      "visits": 0,
-      "sampleInterval": 1
+      "pageViews": null,
+      "visits": null,
+      "sampleInterval": null,
+      "state": "outside"
     },
     {
       "date": "2026-10-12",
-      "pageViews": 0,
-      "visits": 0,
-      "sampleInterval": 1
+      "pageViews": null,
+      "visits": null,
+      "sampleInterval": null,
+      "state": "outside"
     },
     {
       "date": "2026-10-13",
-      "pageViews": 0,
-      "visits": 0,
-      "sampleInterval": 1
+      "pageViews": null,
+      "visits": null,
+      "sampleInterval": null,
+      "state": "outside"
     },
     {
       "date": "2026-10-14",
-      "pageViews": 0,
-      "visits": 0,
-      "sampleInterval": 1
+      "pageViews": null,
+      "visits": null,
+      "sampleInterval": null,
+      "state": "outside"
     },
     {
       "date": "2026-10-15",
-      "pageViews": 0,
-      "visits": 0,
-      "sampleInterval": 1
+      "pageViews": null,
+      "visits": null,
+      "sampleInterval": null,
+      "state": "outside"
     },
     {
       "date": "2026-10-16",
-      "pageViews": 0,
-      "visits": 0,
-      "sampleInterval": 1
+      "pageViews": null,
+      "visits": null,
+      "sampleInterval": null,
+      "state": "outside"
     },
     {
       "date": "2026-10-17",
-      "pageViews": 0,
-      "visits": 0,
-      "sampleInterval": 1
+      "pageViews": null,
+      "visits": null,
+      "sampleInterval": null,
+      "state": "outside"
     },
     {
       "date": "2026-10-18",
-      "pageViews": 0,
-      "visits": 0,
-      "sampleInterval": 1
+      "pageViews": null,
+      "visits": null,
+      "sampleInterval": null,
+      "state": "outside"
     },
     {
       "date": "2026-10-19",
-      "pageViews": 0,
-      "visits": 0,
-      "sampleInterval": 1
+      "pageViews": null,
+      "visits": null,
+      "sampleInterval": null,
+      "state": "outside"
     },
     {
       "date": "2026-10-20",
-      "pageViews": 0,
-      "visits": 0,
-      "sampleInterval": 1
+      "pageViews": null,
+      "visits": null,
+      "sampleInterval": null,
+      "state": "outside"
     },
     {
       "date": "2026-10-21",
-      "pageViews": 0,
-      "visits": 0,
-      "sampleInterval": 1
+      "pageViews": null,
+      "visits": null,
+      "sampleInterval": null,
+      "state": "outside"
     },
     {
       "date": "2026-10-22",
-      "pageViews": 0,
-      "visits": 0,
-      "sampleInterval": 1
+      "pageViews": null,
+      "visits": null,
+      "sampleInterval": null,
+      "state": "outside"
     },
     {
       "date": "2026-10-23",
-      "pageViews": 0,
-      "visits": 0,
-      "sampleInterval": 1
+      "pageViews": null,
+      "visits": null,
+      "sampleInterval": null,
+      "state": "outside"
     },
     {
       "date": "2026-10-24",
-      "pageViews": 20,
-      "visits": 20,
-      "sampleInterval": 10
+      "pageViews": 6,
+      "visits": 5,
+      "sampleInterval": 1,
+      "state": "final"
     },
     {
       "date": "2026-10-25",
-      "pageViews": 30,
-      "visits": 30,
-      "sampleInterval": 10
+      "pageViews": 20,
+      "visits": 20,
+      "sampleInterval": 1,
+      "state": "final"
     },
     {
       "date": "2026-10-26",
-      "pageViews": 30,
-      "visits": 30,
-      "sampleInterval": 10
+      "pageViews": 55,
+      "visits": 52,
+      "sampleInterval": 1,
+      "state": "final"
     },
     {
       "date": "2026-10-27",
       "pageViews": 12,
       "visits": 11,
-      "sampleInterval": 1
+      "sampleInterval": 1,
+      "state": "final"
     },
     {
       "date": "2026-10-28",
       "pageViews": 7,
       "visits": 3,
-      "sampleInterval": 1
+      "sampleInterval": 1,
+      "state": "final"
     },
     {
       "date": "2026-10-29",
       "pageViews": 2,
       "visits": 2,
-      "sampleInterval": 1
+      "sampleInterval": 1,
+      "state": "final"
     },
     {
       "date": "2026-10-30",
       "pageViews": 9,
       "visits": 3,
-      "sampleInterval": 1
+      "sampleInterval": 1,
+      "state": "provisional"
     },
     {
       "date": "2026-10-31",
       "pageViews": 23,
       "visits": 13,
-      "sampleInterval": 1
+      "sampleInterval": 1,
+      "state": "provisional"
     },
     {
       "date": "2026-11-01",
       "pageViews": 10,
       "visits": 4,
-      "sampleInterval": 1
+      "sampleInterval": 1,
+      "state": "provisional"
     }
   ]
 }
