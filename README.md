@@ -23,6 +23,10 @@ The ChatGPT curation task runs on Monday mornings in Asia/Shanghai, reviews publ
 
 Descriptions and maturity labels are curated. Stars and pushes do not prove deployment, validation, personal responsibility or business impact. Never publish private repositories, prompts, credentials or company-confidential content.
 
+Project metadata uses bounded retries and retains the full previous snapshot on
+final failure. Actions reports collection, build and Pages deployment separately;
+see [retry policy and failure records](docs/project-metadata-retries.md).
+
 ## Train and assets
 
 Three.js primitives, a transparent orthographic scene, ten-second cruise, scroll/pointer acceleration, visibility pausing and reduced-motion support. One train stays mounted while its rail sticks and releases; compact navigation appears below it. SVG is the fallback. Browser QA includes WebGL rendering in the in-app Chromium browser; physical-device rendering and Safari remain untested. See [interaction contract](docs/profile-preview.md) and [acceptance evidence](docs/profile-full-page.md).
@@ -30,30 +34,42 @@ Three.js primitives, a transparent orthographic scene, ten-second cruise, scroll
 Font notices are retained in `public/fonts/licenses`. Astro and Three.js retain upstream licenses. The portrait is a user-approved asset and is not offered for reuse. This repository uses its optimized WebP; the original upload is not included.
 
 ## Site Insights (Cloudflare)
-The quiet Site Insights section above the footer shows the last **30 complete UTC days**
-of Page Views, Visits, and the final 7-day trend. Cloudflare Web Analytics is the
-sole telemetry source; browsers never call the Cloudflare GraphQL API.
 
-The Pages workflow reads the RUM GraphQL dataset in six-day chunks, strictly
-filtering the host `hilt21.github.io` and the path `/aboutMe/` to exclude
-other GitHub Pages projects. It generates `src/data/site-analytics.json` and
-validates dates and totals. If Cloudflare samples any daily result, public
-counters carry an approximate sign. Collection errors retain the latest valid
-snapshot, mark it stale, and produce a workflow report failure.
+The quiet bilingual Site Insights component above the footer displays the last
+30 complete UTC days, or the actual period since the Beacon was installed when
+30 days of observations are not yet available. Cloudflare Web Analytics is the
+only telemetry source. No credential is exposed to browsers.
 
-**Required Actions secret:** `CLOUDFLARE_ANALYTICS_TOKEN`. Create a Cloudflare
-API token with minimum Account Analytics read access sufficient to query this
-account's Web Analytics RUM dataset, then save it as a GitHub repository
-Actions secret. Never commit the token or put it in `PUBLIC_*` variables.
-Account ID and site tag in the workflow are identifiers, not credentials.
-Without the secret, the build warns, keeps the verified baseline and eventually
-shows "update overdue".
+### Daily history and refresh rules
 
-The *existing* GitHub Pages release workflow gains a **daily 04:20 UTC**
-analytics-only schedule. On the daily event, the GitHub contribution and
-curated project collectors are skipped; the ChatGPT Monday editorial
-curation schedule remains unchanged. GitHub Actions stays the sole
-deployment pipeline. The workflow also supports manual dispatch.
+- `src/data/site-analytics-history.json` is the canonical long-term history.
+  Initially it was recovered from existing GitHub snapshots with
+  `sampleInterval = 1` and evidence commit SHAs.
+- `src/data/site-analytics.json` is the derived public rolling view.
+  Days before the Beacon began (2026-10-24) are `outside`; unobserved
+  days after that point are `missing`, never assumed zero.
+- Each refresh individually queries the latest seven **complete UTC days**,
+  filtered by exact host `hilt21.github.io` and path `/aboutMe/`.
+  The last three days may be revised by new unsampled observations.
+  Older unsampled records become final and are never overwritten.
+- Data with `sampleInterval > 1` is rejected from the verified history,
+  even if Cloudflare estimates a nonzero count. Empty API results cannot
+  replace existing days. The public 7-day trend never bridges a missing day.
+- Totals sum available verified records. Missing days are explicitly
+  reported, and a `≥` sign marks totals as lower bounds when necessary.
+  An incomplete 30-day period is labeled with its actual coverage dates.
+- The daily history is retained beyond the public 30-day rolling window.
+
+The same GitHub Pages workflow refreshes only telemetry daily at 04:20 UTC.
+The Monday ChatGPT editorial scheduler remains separate. An Actions
+repository secret named `CLOUDFLARE_ANALYTICS_TOKEN` is required, with
+minimum Account Analytics read permission. It must never be committed or
+exposed through Astro public variables. Failed refreshes retain the verified
+history, mark the published snapshot stale, and fail the report job after
+fallback deployment. A missing secret is reported as an error.
+
+See [Site Insights data policy](docs/site-insights.md).
+
 
 ## ChatGPT / Codex activity
 

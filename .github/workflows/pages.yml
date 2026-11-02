@@ -46,8 +46,8 @@ jobs:
           CLOUDFLARE_SITE_TAG: bbcaee918a8a4666bbe86435afc5cefc
         run: |
           if [ -z "$CLOUDFLARE_ANALYTICS_TOKEN" ]; then
-            echo "::warning::CLOUDFLARE_ANALYTICS_TOKEN secret missing; retaining verified Site Insights snapshot"
-            exit 0
+            echo "::error::CLOUDFLARE_ANALYTICS_TOKEN secret missing; retaining verified Site Insights snapshot"
+            exit 1
           fi
           npm run sync:analytics
       - run: npm run check && npm test
@@ -55,8 +55,8 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add src/data/github.json src/data/projects.json src/data/site-analytics.json
-          git diff --cached --quiet || git commit -m 'data: refresh contributions and selected projects'
+          git add src/data/github.json src/data/projects.json src/data/site-analytics.json src/data/site-analytics-history.json
+          git diff --cached --quiet || git commit -m 'data: refresh public activity and verified site analytics'
           git push
       - run: npm run build
         env:
@@ -79,6 +79,12 @@ jobs:
     if: always()
     runs-on: ubuntu-latest
     steps:
-      - name: Report collection or deployment failures
-        if: needs.build.result == 'failure' || needs.deploy.result == 'failure' || needs.build.outputs.calendar_outcome == 'failure' || needs.build.outputs.projects_outcome == 'failure' || needs.build.outputs.analytics_outcome == 'failure'
-        run: exit 1
+      - uses: actions/checkout@v4
+      - name: Report collection and deployment separately
+        env:
+          BUILD_RESULT: ${{ needs.build.result }}
+          DEPLOY_RESULT: ${{ needs.deploy.result }}
+          CALENDAR_OUTCOME: ${{ needs.build.outputs.calendar_outcome }}
+          PROJECTS_OUTCOME: ${{ needs.build.outputs.projects_outcome }}
+          ANALYTICS_OUTCOME: ${{ needs.build.outputs.analytics_outcome }}
+        run: node scripts/report-refresh.mjs
