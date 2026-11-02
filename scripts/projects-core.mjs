@@ -42,7 +42,7 @@ async function classifyResponse(response, now, attempt) {
 }
 
 export async function refreshProjects(projects, previous, {
-  fetchImpl = fetch, sleep = delay, now = () => new Date(), onEvent = event => console.log(JSON.stringify(event)),
+  fetchImpl = fetch, sleep = delay, now = () => new Date(), onEvent = event => console.log(JSON.stringify(event)), token,
 } = {}) {
   const attemptedAt = now().toISOString();
   let waited = 0;
@@ -58,7 +58,7 @@ export async function refreshProjects(projects, previous, {
         let response, failure, repo;
         try {
           response = await fetchImpl(`https://api.github.com/repos/${repoName}`, {
-            headers: { 'User-Agent': 'hilt21-aboutMe', Accept: 'application/vnd.github+json' },
+            headers: { 'User-Agent': 'hilt21-aboutMe', Accept: 'application/vnd.github+json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
             signal: AbortSignal.timeout(30000),
           });
         } catch (error) {
@@ -84,7 +84,9 @@ export async function refreshProjects(projects, previous, {
           break;
         }
         const stop = !failure.retry ? 'not_retryable' : attempt === MAX_ATTEMPTS ? 'attempts_exhausted' : waited + failure.wait_ms > WAIT_BUDGET_MS ? 'wait_budget_exceeded' : null;
-        const details = { category: failure.category, repo: repoName, http_status: response?.status ?? null, attempt, stop };
+        const details = { category: failure.category, repo: repoName, http_status: response?.status ?? null, attempt, stop,
+          ...(failure.retry ? { required_wait_ms: Number.isFinite(failure.wait_ms) ? failure.wait_ms : null, wait_budget_remaining_ms: WAIT_BUDGET_MS - waited } : {}),
+        };
         emit({ event: stop ? 'failed' : 'retry_scheduled', ...details, ...(stop ? {} : { wait_ms: failure.wait_ms }) });
         if (stop) throw new ProjectFailure(details);
         waited += failure.wait_ms;

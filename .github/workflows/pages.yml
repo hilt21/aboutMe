@@ -36,6 +36,8 @@ jobs:
         id: projects
         if: github.event_name != 'schedule'
         continue-on-error: true
+        env:
+          PROJECTS_GITHUB_TOKEN: ${{ github.token }}
         run: node scripts/sync-projects.mjs
       - name: Refresh Site Insights
         id: analytics

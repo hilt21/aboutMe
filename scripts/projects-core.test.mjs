@@ -41,6 +41,18 @@ test('transient unexplained 403 recovers once, logs retry success, and uses no c
   assert.equal(JSON.stringify(result.events).includes('SECRET'), false);
 });
 
+test('existing Actions token is sent only in request headers and never logged or saved', async () => {
+  const events = [];
+  const token = 'SECRET_EPHEMERAL_JOB_TOKEN';
+  const r = await refreshProjects([project], previous, { token, now, onEvent: event => events.push(event), fetchImpl: async (url, options) => {
+    assert.equal(url, 'https://api.github.com/repos/hilt21/aboutMe');
+    assert.equal(options.headers.Authorization, `Bearer ${token}`);
+    return response(403, { message: 'Resource not accessible by integration ' + token });
+  } });
+  assert.equal(r.failed, true);
+  assert.equal(JSON.stringify({ r, events }).includes(token), false);
+});
+
 test('persistent 403 is bounded, retains full old snapshot and timestamp, records cause', async () => {
   const result = await scenario([response(403), response(403)]);
   assert.equal(result.failed, true);
@@ -90,6 +102,7 @@ test('long limits and exponential secondary backoff stop within total wait budge
   assert.equal(long.requests.length, 1);
   assert.deepEqual(long.waits, []);
   assert.match(long.snapshot.error, /wait_budget_exceeded/);
+  assert.equal(long.events.find(e => e.event === 'failed').required_wait_ms, 3600000);
   const secondary = await scenario([response(403, { message: 'secondary rate limit' }), response(403, { message: 'secondary rate limit' })]);
   assert.deepEqual(secondary.waits, [60000]);
   assert.equal(secondary.requests.length, 2);

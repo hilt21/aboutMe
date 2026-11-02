@@ -2,8 +2,12 @@
 
 The existing Pages build still collects public repository metadata, retains the
 last valid snapshot on collection failure, validates/builds, then deploys. No
-credentials, new secret, scheduler or hosting service is added. Codex credentials
-and its local daily collection are unchanged.
+local credentials are uploaded. In Actions the collector reuses the GitHub-issued
+temporary job token already used by checkout/push, with the existing permissions;
+no new secret, scheduler or hosting service is added. Local runs stay anonymous
+unless explicitly given PROJECTS_GITHUB_TOKEN. Codex credentials and its local
+daily collection are unchanged. This avoids the shared runner's anonymous API
+quota without suppressing genuine authenticated rate-limit/permission failures.
 
 Requests remain sequential. Each repository has at most three attempts and each
 request keeps the existing 30-second timeout. All repositories together share a
@@ -15,7 +19,8 @@ rate-limit reset deadlines are honored; if the required wait exceeds the remaini
 budget, collection stops instead of retrying earlier than permitted.
 
 Each safe JSON event contains Beijing time, collection stage, repository,
-attempt, failure category, HTTP status, and retry wait/stop decision. Successful
+attempt, failure category, HTTP status, required wait/remaining budget, and retry
+wait/stop decision. Successful
 recovery logs `retry_succeeded`; an exhausted failure logs `snapshot_retained`.
 Raw response bodies, headers, error messages and credentials are never logged or
 saved. A 403 without supporting evidence remains `http_403_unclassified`, not an
