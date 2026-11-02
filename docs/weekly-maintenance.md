@@ -29,3 +29,14 @@ directly to main; acquisition timestamps alone never trigger publication.
 No credentials leave the Mac. This does not alter editorial scheduling or add a
 cloud collector. GitHub Actions remains the sole release pipeline.
 See `docs/activity-daily-sync.md` for operation and failure boundaries.
+
+
+### Site Insights immutable daily history (approved 2026-11-02)
+
+The published rolling 30-day stats now derive from
+`src/data/site-analytics-history.json`. Only unsampled RUM observations are
+stored. The latest three complete UTC days remain provisional; the latest
+seven days are queried for missed updates, and older verified records
+are finalized. Never overwrite historical values with sampled/empty results.
+Use the deployed snapshot, history, CI run and commit to prove telemetry
+updates. See `docs/site-insights.md`.
