@@ -8,21 +8,31 @@ export const Milestone=z.object({id:z.string(),date:z.string(),title:z.string(),
 export const ProjectSnapshot=z.object({schemaVersion:z.literal(1),updatedAt:z.string().datetime().nullable(),lastAttemptAt:z.string().datetime(),status:z.enum(["ok","stale","unavailable"]),error:z.string().nullable(),items:z.array(z.object({repo:z.string().url(),stars:z.number().int().nonnegative(),forks:z.number().int().nonnegative(),pushedAt:z.string().datetime(),archived:z.boolean(),defaultBranch:z.string()}))});
 
 export const SiteAnalyticsSnapshot = z.object({
-  schemaVersion: z.literal(1),
+  schemaVersion: z.literal(2),
   source: z.literal('cloudflare-web-analytics'),
-  status: z.enum(['ok', 'stale', 'unavailable']),
-  updatedAt: z.string().datetime().nullable(),
+  status: z.enum(['ok','stale','unavailable']),
+  updatedAt: z.string().datetime(),
   lastAttemptAt: z.string().datetime(),
   error: z.string().nullable(),
   host: z.literal('hilt21.github.io'),
   path: z.literal('/aboutMe/'),
-  period: z.object({ from: z.string(), to: z.string(), timeZone: z.literal('UTC') }),
-  totals: z.object({ pageViews: z.number().int().nonnegative(), visits: z.number().int().nonnegative() }).nullable(),
-  sampled: z.boolean(),
-  daily: z.array(z.object({
-    date: z.string(),
+  period: z.object({ from: z.string(),to: z.string(),timeZone:z.literal('UTC') }),
+  totals: z.object({
     pageViews: z.number().int().nonnegative(),
-    visits: z.number().int().nonnegative(),
-    sampleInterval: z.number().min(1)
+    visits: z.number().int().nonnegative()
+  }).nullable(),
+  coverage: z.object({
+    from:z.string().nullable(),
+    expectedDays:z.number().int().nonnegative(),
+    knownDays:z.number().int().nonnegative(),
+    missingDays:z.number().int().nonnegative(),
+    complete:z.boolean()
+  }),
+  sampled:z.literal(false),
+  daily:z.array(z.object({
+    date:z.string(),pageViews:z.number().int().nonnegative().nullable(),
+    visits:z.number().int().nonnegative().nullable(),
+    sampleInterval:z.literal(1).nullable(),
+    state:z.enum(['final','provisional','missing','outside'])
   })).length(30)
 });
