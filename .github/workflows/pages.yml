@@ -79,6 +79,12 @@ jobs:
     if: always()
     runs-on: ubuntu-latest
     steps:
-      - name: Report collection or deployment failures
-        if: needs.build.result == 'failure' || needs.deploy.result == 'failure' || needs.build.outputs.calendar_outcome == 'failure' || needs.build.outputs.projects_outcome == 'failure' || needs.build.outputs.analytics_outcome == 'failure'
-        run: exit 1
+      - uses: actions/checkout@v4
+      - name: Report collection and deployment separately
+        env:
+          BUILD_RESULT: ${{ needs.build.result }}
+          DEPLOY_RESULT: ${{ needs.deploy.result }}
+          CALENDAR_OUTCOME: ${{ needs.build.outputs.calendar_outcome }}
+          PROJECTS_OUTCOME: ${{ needs.build.outputs.projects_outcome }}
+          ANALYTICS_OUTCOME: ${{ needs.build.outputs.analytics_outcome }}
+        run: node scripts/report-refresh.mjs

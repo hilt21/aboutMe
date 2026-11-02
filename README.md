@@ -23,6 +23,10 @@ The ChatGPT curation task runs on Monday mornings in Asia/Shanghai, reviews publ
 
 Descriptions and maturity labels are curated. Stars and pushes do not prove deployment, validation, personal responsibility or business impact. Never publish private repositories, prompts, credentials or company-confidential content.
 
+Project metadata uses bounded retries and retains the full previous snapshot on
+final failure. Actions reports collection, build and Pages deployment separately;
+see [retry policy and failure records](docs/project-metadata-retries.md).
+
 ## Train and assets
 
 Three.js primitives, a transparent orthographic scene, ten-second cruise, scroll/pointer acceleration, visibility pausing and reduced-motion support. One train stays mounted while its rail sticks and releases; compact navigation appears below it. SVG is the fallback. Browser QA includes WebGL rendering in the in-app Chromium browser; physical-device rendering and Safari remain untested. See [interaction contract](docs/profile-preview.md) and [acceptance evidence](docs/profile-full-page.md).
