@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "source": "github-public",
   "updatedAt": "2026-11-02T12:05:22.797Z",
-  "lastAttemptAt": "2026-11-02T12:05:22.797Z",
-  "status": "ok",
-  "error": null,
+  "lastAttemptAt": "2026-11-02T12:22:54.185Z",
+  "status": "stale",
+  "error": "Source returned HTTP 403",
   "calendar": [
     {
       "date": "2025-11-02",
