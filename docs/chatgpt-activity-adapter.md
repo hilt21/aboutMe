@@ -34,6 +34,16 @@ not supported by this endpoint. No API key is required for this integration. A l
 
 The full verified white-listed snapshot is `src/data/chatgpt-activity.json`.
 `last_synced_at` records receipt/normalization, not the server's statistical cutoff.
+
+On 2026-11-03, read-only source verification reproduced missing November1–3
+calendar values. The November2 21:00 snapshot stopped at October31; a fresh
+official response on November3 supplied November2=124585128 tokens, still omitting
+November1 and November3. This is source availability/late arrival, not a display
+date shift. Normal per-date upsert backfills returned records; no counts are
+derived from lifetime differences and omitted dates are never fabricated as zero.
+Codex cell titles now identify source omission; the display-end cell says "not
+yet provided" without a static "Today" claim. The existing latest-observed date
+is a recorded observation date, not a verified statistics cutoff.
 Exact lag, a bucket-by-bucket GUI cross-check and the reason for the streak difference remain unverified. No claim
 of a complete 365-day feed or ordinary Chat message history is made.
 

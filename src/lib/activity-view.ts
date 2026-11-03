@@ -11,3 +11,13 @@ export function activityCalendar(observations: CalendarDay[], end: string): Cale
 export function formatTokenBillions(value: number | null): string {
   return value === null ? '—' : `${(value / 1e9).toFixed(1)}B`;
 }
+
+export function calendarDayTitle(day: CalendarDay, metric: string, locale: 'en' | 'zh', displayEnd: string): string {
+  const metricLabel = locale === 'zh' ? (metric === 'tokens' ? 'Token' : metric === 'contributions' ? '贡献' : metric) : metric;
+  if (day.value !== null) return `${day.date}: ${day.value.toLocaleString('en-US')} ${metricLabel}`;
+  if (metric !== 'tokens') return `${day.date}: ${locale === 'zh' ? '未知' : 'Unknown'}`;
+  const missing = day.date === displayEnd
+    ? (locale === 'zh' ? '来源尚未提供每日 Token' : 'Daily tokens not yet provided by source')
+    : (locale === 'zh' ? '来源未提供每日 Token' : 'Daily tokens not provided by source');
+  return `${day.date}: ${missing}`;
+}
