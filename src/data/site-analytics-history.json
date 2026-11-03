@@ -70,8 +70,8 @@
       "pageViews": 9,
       "visits": 3,
       "sampleInterval": 1,
-      "state": "provisional",
-      "observedAt": "2026-11-02T12:39:04.714Z",
+      "state": "final",
+      "observedAt": "2026-11-03T12:04:41.775Z",
       "origin": "cloudflare-rum"
     },
     {
@@ -80,7 +80,7 @@
       "visits": 13,
       "sampleInterval": 1,
       "state": "provisional",
-      "observedAt": "2026-11-02T12:39:04.714Z",
+      "observedAt": "2026-11-03T12:04:41.775Z",
       "origin": "cloudflare-rum"
     },
     {
@@ -89,7 +89,16 @@
       "visits": 4,
       "sampleInterval": 1,
       "state": "provisional",
-      "observedAt": "2026-11-02T13:00:40.150Z",
+      "observedAt": "2026-11-03T12:04:41.775Z",
+      "origin": "cloudflare-rum"
+    },
+    {
+      "date": "2026-11-02",
+      "pageViews": 12,
+      "visits": 9,
+      "sampleInterval": 1,
+      "state": "provisional",
+      "observedAt": "2026-11-03T12:04:41.775Z",
       "origin": "cloudflare-rum"
     }
   ]
