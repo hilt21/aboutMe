@@ -60,7 +60,8 @@ jobs:
           git add src/data/github.json src/data/projects.json src/data/site-analytics.json src/data/site-analytics-history.json
           git diff --cached --quiet || git commit -m 'data: refresh public activity and verified site analytics'
           git push
-      - run: npm run build
+      - name: Build site with actual checked-out source commit
+        run: SITE_SOURCE_SHA="$(git rev-parse HEAD)" npm run build
         env:
           PUBLIC_BASE_PATH: /aboutMe/
           SITE_URL: https://hilt21.github.io
