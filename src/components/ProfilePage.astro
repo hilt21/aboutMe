@@ -67,9 +67,15 @@ const compactLabels:Record<string,{en:string;zh:string}>={mechanical:{en:'Mechan
 <script>
 import {experienceYears,profileYear} from '../lib/experience';
 import {snapshotOverdue} from '../lib/snapshot-freshness';
+import {watchFreshness} from '../lib/freshness-view';
 function refreshExperience(){const year=profileYear();document.querySelectorAll<HTMLElement>('[data-experience-years]').forEach(el=>{el.textContent=`${experienceYears(Number(el.dataset.experienceYears),Number(el.dataset.baselineYear),year)}+`;});}
 refreshExperience();document.addEventListener('visibilitychange',refreshExperience);setInterval(refreshExperience,3600000);
 // The URL owns the locale. Retire the old preference without redirecting deep links.
 try{localStorage.removeItem('profile-language')}catch{}
-const freshness=document.querySelector<HTMLElement>('#freshness')!;if(snapshotOverdue(freshness.dataset.updated,10*24*3600*1000,freshness.dataset.status)){freshness.textContent=document.documentElement.lang==='zh-CN'?' · 更新延迟':' · Update overdue';freshness.classList.add('stale')}
+const freshness=document.querySelector<HTMLElement>('#freshness');
+if(freshness) watchFreshness(()=>{
+ const overdue=snapshotOverdue(freshness.dataset.updated,10*24*3600*1000,freshness.dataset.status);
+ freshness.textContent=overdue?(document.documentElement.lang==='zh-CN'?' · 更新延迟':' · Update overdue'):'';
+ freshness.classList.toggle('stale',overdue);
+});
 </script></body></html>
