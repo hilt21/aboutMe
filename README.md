@@ -33,6 +33,17 @@ Three.js primitives, a transparent orthographic scene, ten-second cruise, scroll
 
 Font notices are retained in `public/fonts/licenses`. Astro and Three.js retain upstream licenses. The portrait is a user-approved asset and is not offered for reuse. This repository uses its optimized WebP; the original upload is not included.
 
+## Public build provenance
+
+`/aboutMe/site-status.json` is a machine-readable, static build manifest.
+It exposes the actual built source commit SHA (when provided by the build runner),
+build timestamp, verified snapshot timestamps/status, and Site Insights coverage.
+It contains no raw Codex activity, credentials, API responses or error bodies.
+`artifact: static-build` does **not** prove Pages deployment; verify Actions
+`deploy` and `report` jobs separately. A push refresh may create an additional
+data commit; the Pages build embeds `git rev-parse HEAD` **after** that commit.
+Local builds without `SITE_SOURCE_SHA` report `sourceCommit: null`.
+
 ## Site Insights (Cloudflare)
 
 The quiet bilingual Site Insights component above the footer displays the last
