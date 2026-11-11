@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "",
-    "build": "astro build && npm run test:seo",
+    "build": "astro build && node scripts/generate-site-status.mjs && npm run test:seo",
     "check": "astro check && node scripts/validate-data.mjs && node scripts/validate-site-analytics.mjs && node --experimental-strip-types scripts/activity/validate.ts",
     "sync": "node scripts/sync-github.mjs",
     "test": "node --experimental-strip-types --test scripts/*.test.mjs",
