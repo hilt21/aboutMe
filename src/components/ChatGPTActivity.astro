@@ -5,6 +5,7 @@ import raw from '../data/chatgpt-activity.json';
 import analyticsRaw from '../data/chatgpt-analytics.json';
 import { activitySchema } from '../lib/chatgpt-activity';
 import { activityCalendar, formatTokenBillions } from '../lib/activity-view';
+import { snapshotOverdue } from '../lib/snapshot-freshness';
 import ActivityCalendar from './ActivityCalendar.astro';
 const data = activitySchema.parse(raw);
 const analytics = activitySchema.parse(analyticsRaw);
@@ -19,7 +20,7 @@ const metrics = [
   ['currentStreakDays','Current streak · days','当前连续 · 天'],
 ] as const;
 const missing = days.filter(day => day.value === null).length;
-const stale = !data.last_synced_at || Date.now()-Date.parse(data.last_synced_at)>48*3600000;
+const stale = snapshotOverdue(data.last_synced_at,48*3600000);
 ---
 <section class="activity-panel chatgpt-activity" id="codex-panel" aria-labelledby="codex-heading" data-synced={data.last_synced_at??''}>
   <div class="activity-panel-heading"><h3 id="codex-heading">Codex</h3><span class="activity-overdue" hidden={!stale}>{locale === 'zh' ? "更新延迟" : "Update overdue"}</span></div>
@@ -45,7 +46,8 @@ const stale = !data.last_synced_at || Date.now()-Date.parse(data.last_synced_at)
   </details>
 </section>
 <script>
+import { snapshotOverdue } from '../lib/snapshot-freshness';
 const activity=document.querySelector<HTMLElement>('.chatgpt-activity');
 const notice=activity?.querySelector<HTMLElement>('.activity-overdue');
-if(activity && notice && (!activity.dataset.synced || Date.now()-Date.parse(activity.dataset.synced)>48*3600000)) notice.hidden=false;
+if(activity && notice && snapshotOverdue(activity.dataset.synced,48*3600000)) notice.hidden=false;
 </script>
