@@ -41,10 +41,11 @@ export function mountTrain(host:HTMLElement){
   if(disposed)return;
   const initial={x,time,distance};
   // Retire the broken renderer before mounting SVG; retain one motion controller.
-  dispose(true);
+  release(true);
   mountFallback(host,{motion,initial});
  };renderer.domElement.addEventListener('webglcontextlost',lost);
  const geometries=new Set<T.BufferGeometry>(),materials=new Set<T.Material>();
- function dispose(preserveMotion=false){if(disposed)return;disposed=true;if(!preserveMotion)motion.dispose();cancelAnimationFrame(frame);intersection.disconnect();resizeObserver.disconnect();media.removeEventListener('change',update);document.removeEventListener('visibilitychange',update);renderer.domElement.removeEventListener('webglcontextlost',lost);scene.traverse(obj=>{if(obj instanceof T.Mesh){geometries.add(obj.geometry);(Array.isArray(obj.material)?obj.material:[obj.material]).forEach(m=>materials.add(m));}});geometries.forEach(g=>g.dispose());materials.forEach(m=>m.dispose());try{renderer.dispose();}catch{/* Context loss can also invalidate renderer cleanup. */}renderer.domElement.remove();host.dataset.train='disposed';window.removeEventListener('pagehide',dispose);document.removeEventListener('astro:before-swap',dispose);}
+ function release(preserveMotion=false){if(disposed)return;disposed=true;if(!preserveMotion)motion.dispose();cancelAnimationFrame(frame);intersection.disconnect();resizeObserver.disconnect();media.removeEventListener('change',update);document.removeEventListener('visibilitychange',update);renderer.domElement.removeEventListener('webglcontextlost',lost);scene.traverse(obj=>{if(obj instanceof T.Mesh){geometries.add(obj.geometry);(Array.isArray(obj.material)?obj.material:[obj.material]).forEach(m=>materials.add(m));}});geometries.forEach(g=>g.dispose());materials.forEach(m=>m.dispose());try{renderer.dispose();}catch{/* Context loss can also invalidate renderer cleanup. */}renderer.domElement.remove();host.dataset.train='disposed';window.removeEventListener('pagehide',dispose);document.removeEventListener('astro:before-swap',dispose);}
+ function dispose(){release();}
  window.addEventListener('pagehide',dispose);document.addEventListener('astro:before-swap',dispose);resize();update();return dispose;
 }
