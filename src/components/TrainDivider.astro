@@ -2,7 +2,11 @@
   <div class="train-canvas"></div>
 </div>
 <script>
-
+  import {mountLazyTrain} from '../lib/train/TrainBootstrap';
   const el=document.querySelector<HTMLElement>('[data-train-divider]');
-  if(el){const observer=new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting)){observer.disconnect();import('../lib/train/TrainScene').then(({mountTrain})=>mountTrain(el));}}, {rootMargin:'120px'});observer.observe(el);}
+  if(el) mountLazyTrain(
+    el,
+    async () => (await import('../lib/train/TrainScene')).mountTrain,
+    async () => (await import('../lib/train/TrainFallback')).mountFallback,
+  );
 </script>
