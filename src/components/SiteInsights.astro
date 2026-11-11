@@ -3,6 +3,7 @@ interface Props { locale: 'en' | 'zh'; }
 const { locale } = Astro.props;
 import raw from '../data/site-analytics.json';
 import { SiteAnalyticsSnapshot } from '../lib/schema';
+import { snapshotOverdue } from '../lib/snapshot-freshness';
 
 const data = SiteAnalyticsSnapshot.parse(raw);
 const available = data.updatedAt !== null && data.totals !== null;
@@ -34,7 +35,7 @@ const periodLabel = periodPartial && first
   : (locale==='zh'?'最近 30 个完整自然日 · UTC':'LAST 30 COMPLETE DAYS · UTC');
 const updatedLabel = new Date(data.updatedAt).toLocaleDateString(locale==='zh'?'zh-CN':'en-US',
   {month:'short',day:'numeric',timeZone:'UTC'});
-const stale = data.status!=='ok'||Date.now()-Date.parse(data.updatedAt)>48*60*60*1000;
+const stale = snapshotOverdue(data.updatedAt,48*60*60*1000,data.status);
 const incomplete = data.coverage.missingDays>0;
 ---
 <section class="site-insights" id="site-insights" aria-label={locale==='zh'?'网站访问统计':'Site traffic'} data-updated={data.updatedAt} data-status={data.status}>
@@ -79,10 +80,11 @@ const incomplete = data.coverage.missingDays>0;
   </div>
 </section>
 <script>
+import { snapshotOverdue } from '../lib/snapshot-freshness';
 const section=document.querySelector<HTMLElement>('#site-insights');
 const mark=document.querySelector<HTMLElement>('#site-insights-stale');
 if(section&&mark){
   const updated=section.dataset.updated;
-  if(!updated||section.dataset.status!=='ok'||Date.now()-Date.parse(updated)>48*60*60*1000)mark.hidden=false;
+  if(snapshotOverdue(updated,48*60*60*1000,section.dataset.status))mark.hidden=false;
 }
 </script>
