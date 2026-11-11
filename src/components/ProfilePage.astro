@@ -66,9 +66,10 @@ const compactLabels:Record<string,{en:string;zh:string}>={mechanical:{en:'Mechan
 <footer><div><a href="#" class="footer-brand">Lu Tao</a><span>{locale === 'zh' ? "工程 × AI × 人的判断" : "Engineering × AI × Human judgment"}</span></div><div class="provenance"><span><span class="live-dot"></span>{locale==='zh'?'GitHub 快照':'GitHub snapshot'} · {updated}<span id="freshness" data-updated={data.updatedAt} data-status={data.status}></span></span><span>{locale === 'zh' ? "画像核对于 2026-10-12 · 仅展示公开资料" : "Profile reviewed Oct 12, 2026 · Public sources only"}</span><a href={profile.github} target="_blank" rel="noopener noreferrer"><span>{locale === 'zh' ? "来源：GitHub 公开贡献与仓库" : "Source: GitHub public contributions & repositories"}</span><span aria-hidden="true">↗</span></a></div><a href="#" class="back-top" aria-label={locale==='zh'?'返回顶部':'Back to top'}>↑</a></footer></div>
 <script>
 import {experienceYears,profileYear} from '../lib/experience';
+import {snapshotOverdue} from '../lib/snapshot-freshness';
 function refreshExperience(){const year=profileYear();document.querySelectorAll<HTMLElement>('[data-experience-years]').forEach(el=>{el.textContent=`${experienceYears(Number(el.dataset.experienceYears),Number(el.dataset.baselineYear),year)}+`;});}
 refreshExperience();document.addEventListener('visibilitychange',refreshExperience);setInterval(refreshExperience,3600000);
 // The URL owns the locale. Retire the old preference without redirecting deep links.
 try{localStorage.removeItem('profile-language')}catch{}
-const freshness=document.querySelector<HTMLElement>('#freshness')!;if(!freshness.dataset.updated||freshness.dataset.status!=='ok'||Date.now()-Date.parse(freshness.dataset.updated)>10*24*3600*1000){freshness.textContent=document.documentElement.lang==='zh-CN'?' · 更新延迟':' · Update overdue';freshness.classList.add('stale')}
+const freshness=document.querySelector<HTMLElement>('#freshness')!;if(snapshotOverdue(freshness.dataset.updated,10*24*3600*1000,freshness.dataset.status)){freshness.textContent=document.documentElement.lang==='zh-CN'?' · 更新延迟':' · Update overdue';freshness.classList.add('stale')}
 </script></body></html>

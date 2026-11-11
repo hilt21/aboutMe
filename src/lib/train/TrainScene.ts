@@ -1,4 +1,5 @@
 import {reducedMotion} from './MotionPreference';
+import {trainPhase} from './TrainState';
 import * as T from 'three';
 import {mountFallback} from './TrainFallback';
 import {createTrain} from './TrainModel';
@@ -31,12 +32,20 @@ export function mountTrain(host:HTMLElement){
   renderer.render(scene,camera);host.dataset.trainX=x.toFixed(2);host.dataset.trainTime=time.toFixed(2);
  }
  function tick(now:number){if(disposed)return;const dt=last?Math.min((now-last)/1000,.1):0;last=now;render(dt);frame=requestAnimationFrame(tick);}
- function update(){cancelAnimationFrame(frame);frame=0;last=0;const active=visible&&!document.hidden&&!reducedMotion(media)&&!disposed;host.dataset.train=disposed?'disposed':active?'running':reducedMotion(media)?'reduced':'paused';if(active)frame=requestAnimationFrame(tick);else if(!disposed)render(0);}
+ function update(){cancelAnimationFrame(frame);frame=0;last=0;const phase=trainPhase(visible,document.hidden,reducedMotion(media),disposed);host.dataset.train=phase;if(phase==='running')frame=requestAnimationFrame(tick);else if(!disposed)render(0);}
  const intersection=new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;update();});intersection.observe(host);
  const resizeObserver=new ResizeObserver(resize);resizeObserver.observe(host);
  media.addEventListener('change',update);document.addEventListener('visibilitychange',update);
- const lost=(e:Event)=>{e.preventDefault();cancelAnimationFrame(frame);host.dataset.train='fallback';renderer.domElement.style.visibility='hidden';};renderer.domElement.addEventListener('webglcontextlost',lost);
+ const lost=(event:Event)=>{
+  event.preventDefault(); // Required for WebGL context-loss handling.
+  if(disposed)return;
+  const initial={x,time,distance};
+  // Retire the broken renderer before mounting SVG; retain one motion controller.
+  release(true);
+  mountFallback(host,{motion,initial});
+ };renderer.domElement.addEventListener('webglcontextlost',lost);
  const geometries=new Set<T.BufferGeometry>(),materials=new Set<T.Material>();
- function dispose(){if(disposed)return;disposed=true;motion.dispose();cancelAnimationFrame(frame);intersection.disconnect();resizeObserver.disconnect();media.removeEventListener('change',update);document.removeEventListener('visibilitychange',update);renderer.domElement.removeEventListener('webglcontextlost',lost);scene.traverse(obj=>{if(obj instanceof T.Mesh){geometries.add(obj.geometry);(Array.isArray(obj.material)?obj.material:[obj.material]).forEach(m=>materials.add(m));}});geometries.forEach(g=>g.dispose());materials.forEach(m=>m.dispose());renderer.dispose();renderer.domElement.remove();host.dataset.train='disposed';window.removeEventListener('pagehide',dispose);document.removeEventListener('astro:before-swap',dispose);}
+ function release(preserveMotion=false){if(disposed)return;disposed=true;if(!preserveMotion)motion.dispose();cancelAnimationFrame(frame);intersection.disconnect();resizeObserver.disconnect();media.removeEventListener('change',update);document.removeEventListener('visibilitychange',update);renderer.domElement.removeEventListener('webglcontextlost',lost);scene.traverse(obj=>{if(obj instanceof T.Mesh){geometries.add(obj.geometry);(Array.isArray(obj.material)?obj.material:[obj.material]).forEach(m=>materials.add(m));}});geometries.forEach(g=>g.dispose());materials.forEach(m=>m.dispose());try{renderer.dispose();}catch{/* Context loss can also invalidate renderer cleanup. */}renderer.domElement.remove();host.dataset.train='disposed';window.removeEventListener('pagehide',dispose);document.removeEventListener('astro:before-swap',dispose);}
+ function dispose(){release();}
  window.addEventListener('pagehide',dispose);document.addEventListener('astro:before-swap',dispose);resize();update();return dispose;
 }

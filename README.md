@@ -29,7 +29,7 @@ see [retry policy and failure records](docs/project-metadata-retries.md).
 
 ## Train and assets
 
-Three.js primitives, a transparent orthographic scene, ten-second cruise, scroll/pointer acceleration, visibility pausing and reduced-motion support. One train stays mounted while its rail sticks and releases; compact navigation appears below it. SVG is the fallback. Browser QA includes WebGL rendering in the in-app Chromium browser; physical-device rendering and Safari remain untested. See [interaction contract](docs/profile-preview.md) and [acceptance evidence](docs/profile-full-page.md).
+Three.js primitives, a transparent orthographic scene, ten-second cruise, scroll/pointer acceleration, visibility pausing and reduced-motion support. One train stays mounted while its rail sticks and releases; compact navigation appears below it. SVG is the fallback, including when the WebGL context is lost. Browser QA includes WebGL rendering in the in-app Chromium browser; physical-device rendering and Safari remain untested. See [interaction contract](docs/profile-preview.md), [state contracts and fault-injection checklist](docs/state-contracts.md), and [acceptance evidence](docs/profile-full-page.md).
 
 Font notices are retained in `public/fonts/licenses`. Astro and Three.js retain upstream licenses. The portrait is a user-approved asset and is not offered for reuse. This repository uses its optimized WebP; the original upload is not included.
 
