@@ -81,10 +81,12 @@ const incomplete = data.coverage.missingDays>0;
 </section>
 <script>
 import { snapshotOverdue } from '../lib/snapshot-freshness';
+import { watchFreshness } from '../lib/freshness-view';
 const section=document.querySelector<HTMLElement>('#site-insights');
 const mark=document.querySelector<HTMLElement>('#site-insights-stale');
 if(section&&mark){
-  const updated=section.dataset.updated;
-  if(snapshotOverdue(updated,48*60*60*1000,section.dataset.status))mark.hidden=false;
+  watchFreshness(()=>{
+    mark.hidden=!snapshotOverdue(section.dataset.updated,48*60*60*1000,section.dataset.status);
+  });
 }
 </script>

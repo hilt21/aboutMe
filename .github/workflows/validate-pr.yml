@@ -14,7 +14,7 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci
-      - run: npm run check && npm test && npm run build
+      - run: npm run check && npm test && SITE_SOURCE_SHA="$(git rev-parse HEAD)" npm run build
         env:
           SITE_URL: https://hilt21.github.io
           PUBLIC_BASE_PATH: /aboutMe/

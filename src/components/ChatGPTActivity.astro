@@ -47,7 +47,10 @@ const stale = snapshotOverdue(data.last_synced_at,48*3600000);
 </section>
 <script>
 import { snapshotOverdue } from '../lib/snapshot-freshness';
+import { watchFreshness } from '../lib/freshness-view';
 const activity=document.querySelector<HTMLElement>('.chatgpt-activity');
 const notice=activity?.querySelector<HTMLElement>('.activity-overdue');
-if(activity && notice && snapshotOverdue(activity.dataset.synced,48*3600000)) notice.hidden=false;
+if(activity && notice) watchFreshness(()=>{
+  notice.hidden=!snapshotOverdue(activity.dataset.synced,48*3600000);
+});
 </script>

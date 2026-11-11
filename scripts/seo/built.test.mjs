@@ -5,6 +5,21 @@ import path from 'node:path';
 import {validatePage,builtSite,elements,attr} from './validate.mjs';
 const config=builtSite();
 const pages={en:readFileSync(path.join(config.dist,'index.html'),'utf8'),zh:readFileSync(path.join(config.dist,'zh/index.html'),'utf8')};
+test('public build provenance reflects exact snapshot metadata without implying deployment',()=>{
+  const status=JSON.parse(readFileSync(path.join(config.dist,'site-status.json'),'utf8'));
+  const github=JSON.parse(readFileSync('src/data/github.json','utf8'));
+  const projects=JSON.parse(readFileSync('src/data/projects.json','utf8'));
+  const codex=JSON.parse(readFileSync('src/data/chatgpt-activity.json','utf8'));
+  const analytics=JSON.parse(readFileSync('src/data/site-analytics.json','utf8'));
+  assert.equal(status.artifact,'static-build');
+  assert.equal(status.sourceCommit,process.env.SITE_SOURCE_SHA || null);
+  assert.deepEqual(status.sources.github,{status:github.status,updatedAt:github.updatedAt,lastAttemptAt:github.lastAttemptAt});
+  assert.deepEqual(status.sources.projects,{status:projects.status,updatedAt:projects.updatedAt,lastAttemptAt:projects.lastAttemptAt});
+  assert.equal(status.sources.codex.lastSyncedAt,codex.last_synced_at);
+  assert.equal(status.sources.siteInsights.status,analytics.status);
+  assert.equal(status.sources.siteInsights.coverage.missingDays,analytics.coverage.missingDays);
+  assert.ok(!('deployStatus' in status),'build must not claim deployment confirmation');
+});
 for(const locale of ['en','zh'])test(`${locale}: static HTML, metadata, profile schema, crawlable links and assets`,()=>validatePage(pages[locale],{...config,locale}));
 for(const locale of ['en','zh'])test(`${locale}: one train remains outside the scrolling identity in the shared page shell`,()=>{
   const nodes=elements(pages[locale]);

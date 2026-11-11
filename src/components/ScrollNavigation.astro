@@ -13,26 +13,9 @@ const { locale, email } = Astro.props;
   </div>
 </nav>
 <script>
+  import {mountScrollNavigation} from '../lib/scroll-navigation';
   const navigation = document.querySelector<HTMLElement>('.scroll-navigation');
   const dock = document.querySelector<HTMLElement>('.train-dock');
   const sentinel = document.querySelector<HTMLElement>('.train-dock-sentinel');
-  if (navigation && dock && sentinel) {
-    const pinTop = parseFloat(getComputedStyle(dock).top);
-    let pinned = false;
-    const update = () => {
-      // Keep a focused navigation available when the user scrolls back up.
-      const visible = pinned || navigation.contains(document.activeElement);
-      dock.classList.toggle('is-pinned', pinned);
-      navigation.hidden = false;
-      navigation.classList.toggle('is-visible', visible);
-      navigation.inert = !visible;
-      navigation.setAttribute('aria-hidden', String(!visible));
-    };
-    const observer = new IntersectionObserver(([entry]) => {
-      pinned = !entry.isIntersecting && entry.boundingClientRect.bottom <= pinTop;
-      update();
-    }, {rootMargin: `-${pinTop}px 0px 0px 0px`});
-    observer.observe(sentinel);
-    navigation.addEventListener('focusout', () => queueMicrotask(update));
-  }
+  if (navigation && dock && sentinel) mountScrollNavigation(navigation, dock, sentinel);
 </script>
