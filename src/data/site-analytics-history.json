@@ -161,7 +161,7 @@
       "visits": 19,
       "sampleInterval": 1,
       "state": "provisional",
-      "observedAt": "2026-11-12T12:57:03.722Z",
+      "observedAt": "2026-11-12T13:00:51.364Z",
       "origin": "cloudflare-rum"
     },
     {
@@ -170,7 +170,7 @@
       "visits": 5,
       "sampleInterval": 1,
       "state": "provisional",
-      "observedAt": "2026-11-12T12:57:03.722Z",
+      "observedAt": "2026-11-12T13:00:51.364Z",
       "origin": "cloudflare-rum"
     },
     {
@@ -179,7 +179,7 @@
       "visits": 14,
       "sampleInterval": 1,
       "state": "provisional",
-      "observedAt": "2026-11-12T12:57:03.722Z",
+      "observedAt": "2026-11-12T13:00:51.364Z",
       "origin": "cloudflare-rum"
     }
   ]
